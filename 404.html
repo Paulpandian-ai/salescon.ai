@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — SalesCon.ai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0b;
+            --white: #f5f5f3;
+            --accent: #00ff88;
+            --gray-400: #8a8a96;
+            --gray-700: #2a2a30;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .code {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(5rem, 15vw, 10rem);
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        p {
+            color: var(--gray-400);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            max-width: 400px;
+        }
+        a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: var(--black);
+            padding: 0.8rem 1.75rem;
+            border-radius: 8px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,255,136,0.15);
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="code">404</div>
+        <h1>Page not found.</h1>
+        <p>The page you're looking for doesn't exist or has been moved.</p>
+        <a href="/">Back to Home &rarr;</a>
+    </div>
+</body>
+</html>
