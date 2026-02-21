@@ -1568,13 +1568,25 @@ Code block
 
         // ===== PHOTO =====
         let pendingPhoto = null; // { base64, name, ext }
+        let lastUploadedPhotoDataUrl = null; // cached base64 data URL for preview after upload
 
         function renderPhotoPreview() {
             const container = document.getElementById('photo-preview');
             if (pendingPhoto) {
                 container.innerHTML = `<img src="data:image/${pendingPhoto.ext === 'png' ? 'png' : 'jpeg'};base64,${pendingPhoto.base64}" alt="Preview">`;
+            } else if (lastUploadedPhotoDataUrl) {
+                // Show cached base64 preview (GitHub Pages hasn't rebuilt yet)
+                container.innerHTML = `<img src="${lastUploadedPhotoDataUrl}" alt="Profile photo">`;
             } else if (siteContent.profile.photo) {
-                container.innerHTML = `<img src="/${siteContent.profile.photo}" alt="Profile photo">`;
+                // Try loading from live site, fall back to placeholder on error
+                const img = document.createElement('img');
+                img.alt = 'Profile photo';
+                img.src = `/${siteContent.profile.photo}?v=${Date.now()}`;
+                img.onerror = () => {
+                    container.innerHTML = '<div class="photo-preview-placeholder">Photo uploaded<br><small>Waiting for site rebuild</small></div>';
+                };
+                container.innerHTML = '';
+                container.appendChild(img);
             } else {
                 container.innerHTML = '<div class="photo-preview-placeholder">No photo</div>';
             }
@@ -1596,20 +1608,38 @@ Code block
         }
 
         async function uploadFile(base64, filePath, commitMsg) {
+            console.log(`[uploadFile] Starting upload: ${filePath} (${Math.round(base64.length / 1024)}KB base64)`);
+
             // Check if file exists to get SHA
             let sha = null;
             try {
                 const res = await githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${filePath}?ref=${CONFIG.branch}`);
-                if (res.ok) { const d = await res.json(); sha = d.sha; }
-            } catch(e) {}
+                if (res.ok) {
+                    const d = await res.json();
+                    sha = d.sha;
+                    console.log(`[uploadFile] Existing file found, SHA: ${sha}`);
+                } else {
+                    console.log(`[uploadFile] File does not exist yet (status: ${res.status}), will create new`);
+                }
+            } catch(e) {
+                console.log(`[uploadFile] Error checking existing file:`, e);
+            }
 
             const body = { message: commitMsg, content: base64, branch: CONFIG.branch };
             if (sha) body.sha = sha;
 
+            console.log(`[uploadFile] PUT to GitHub API, branch: ${CONFIG.branch}`);
             const res = await githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${filePath}`, { method: 'PUT', body });
-            if (res.ok) return { ok: true };
+
+            if (res.ok) {
+                const data = await res.json();
+                console.log(`[uploadFile] Upload successful! New SHA: ${data.content.sha}`);
+                return { ok: true };
+            }
+
             let errorMsg = `Upload failed (${res.status})`;
-            try { const d = await res.json(); errorMsg = d.message || errorMsg; } catch(e) {}
+            try { const d = await res.json(); errorMsg = d.message || errorMsg; console.error(`[uploadFile] Upload failed:`, d); } catch(e) {}
+            console.error(`[uploadFile] Error: ${errorMsg}`);
             return { ok: false, error: errorMsg };
         }
 
@@ -1731,40 +1761,56 @@ Code block
             const experience = [...(siteContent.experience || [])];
             let photoPath = siteContent.profile.photo;
 
+            console.log('[saveProfile] Starting save. pendingPhoto:', !!pendingPhoto, 'currentPhotoPath:', photoPath);
+
             showLoading('Saving profile...');
 
             try {
                 // Upload photo if pending
                 if (pendingPhoto) {
                     photoPath = `assets/profile-photo.${pendingPhoto.ext === 'png' ? 'png' : 'jpg'}`;
+                    console.log('[saveProfile] Uploading photo to:', photoPath);
+
+                    // Cache the base64 data URL for preview before clearing pendingPhoto
+                    lastUploadedPhotoDataUrl = `data:image/${pendingPhoto.ext === 'png' ? 'png' : 'jpeg'};base64,${pendingPhoto.base64}`;
+
                     const uploadResult = await uploadFile(pendingPhoto.base64, photoPath, 'Update profile photo');
                     if (!uploadResult.ok) {
                         hideLoading();
+                        lastUploadedPhotoDataUrl = null;
                         showError(errorEl, `Photo upload failed: ${uploadResult.error}`);
                         return;
                     }
+                    console.log('[saveProfile] Photo uploaded successfully');
                     pendingPhoto = null;
                 }
 
                 // Reload to get the LATEST SHA, then re-apply all our changes
+                console.log('[saveProfile] Reloading site-content.json for latest SHA...');
                 await loadSiteContent();
+                console.log('[saveProfile] SHA after reload:', siteContentSha);
+
                 siteContent.profile.headline = headline;
                 siteContent.profile.bio = bio;
                 siteContent.profile.tags = tags;
                 siteContent.profile.photo = photoPath;
                 siteContent.experience = experience;
 
+                console.log('[saveProfile] Saving site-content.json with photo path:', photoPath);
                 const result = await saveSiteContent('Update profile');
                 hideLoading();
 
                 if (result.ok) {
+                    console.log('[saveProfile] Profile saved successfully!');
                     showToast('Profile saved! Site will rebuild in ~1 min.', 'success');
                     renderPhotoPreview();
                 } else {
+                    console.error('[saveProfile] Failed to save:', result.error);
                     showError(errorEl, `Failed to save: ${result.error}`);
                 }
             } catch (err) {
                 hideLoading();
+                console.error('[saveProfile] Exception:', err);
                 showError(errorEl, `Error: ${err.message}`);
             }
         }
