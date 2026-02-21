@@ -573,6 +573,7 @@
             .editor-grid { grid-template-columns: 1fr; }
             .editor-meta-row { grid-template-columns: 1fr; }
             .dashboard-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+            .photo-upload-area { flex-direction: column; }
         }
 
         @media (max-width: 600px) {
@@ -584,6 +585,197 @@
             .posts-table td:nth-child(3),
             .posts-table th:nth-child(4),
             .posts-table td:nth-child(4) { display: none; }
+            .admin-tabs { gap: 0; }
+            .admin-tab { padding: 0.6rem 0.75rem; font-size: 0.78rem; }
+        }
+
+        /* ===== ADMIN TABS ===== */
+        .admin-tabs {
+            display: flex;
+            gap: 0.25rem;
+            border-bottom: 1px solid var(--gray-700);
+            margin-bottom: 2rem;
+        }
+
+        .admin-tab {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--gray-500);
+            font-family: var(--font);
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            margin-bottom: -1px;
+        }
+        .admin-tab:hover { color: var(--gray-300); }
+        .admin-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ===== ADMIN SECTIONS ===== */
+        .admin-section {
+            background: var(--gray-900);
+            border: 1px solid rgba(79, 140, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-section h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--gray-700);
+        }
+
+        /* ===== PHOTO UPLOAD ===== */
+        .photo-upload-area {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .photo-preview {
+            width: 150px;
+            height: 180px;
+            background: var(--gray-800);
+            border: 2px dashed var(--gray-700);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-preview-placeholder {
+            color: var(--gray-500);
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        .form-help {
+            font-size: 0.78rem;
+            color: var(--gray-500);
+            margin-top: 0.5rem;
+        }
+
+        /* ===== TAGS ===== */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tag-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(79, 140, 255, 0.1);
+            border: 1px solid rgba(79, 140, 255, 0.25);
+            color: var(--accent);
+            padding: 0.3rem 0.7rem;
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .tag-remove {
+            cursor: pointer;
+            opacity: 0.6;
+            font-size: 1rem;
+            line-height: 1;
+        }
+        .tag-remove:hover { opacity: 1; }
+
+        .tag-add-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag-add-row input {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            background: var(--gray-800);
+            border: 1px solid var(--gray-700);
+            border-radius: 6px;
+            color: var(--white);
+            font-family: var(--font);
+            font-size: 0.85rem;
+            outline: none;
+        }
+        .tag-add-row input:focus { border-color: var(--accent); }
+
+        /* ===== EXPERIENCE CARDS ===== */
+        .exp-admin-card {
+            background: var(--gray-800);
+            border: 1px solid var(--gray-700);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .exp-admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .exp-admin-header strong {
+            font-size: 0.95rem;
+        }
+
+        /* ===== EXPERIENCE MODAL ===== */
+        .modal-wide {
+            max-width: 560px;
+        }
+
+        .modal-wide .form-group {
+            margin-bottom: 1rem;
+        }
+
+        /* ===== RESUME SECTION ===== */
+        .resume-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--gray-800);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .resume-status-icon {
+            font-size: 2rem;
+        }
+
+        .resume-status-text strong {
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .resume-status-text span {
+            font-size: 0.82rem;
+            color: var(--gray-500);
         }
     </style>
 </head>
@@ -641,12 +833,94 @@
         </div>
 
         <div class="dashboard-content">
-            <div class="dashboard-header">
-                <h2>Blog Posts</h2>
-                <button class="btn btn-primary" onclick="openEditor()">+ New Post</button>
+            <!-- TABS -->
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="switchTab('posts')">Posts</button>
+                <button class="admin-tab" onclick="switchTab('profile')">Profile</button>
+                <button class="admin-tab" onclick="switchTab('resume')">Resume</button>
             </div>
 
-            <div id="posts-list"></div>
+            <!-- POSTS TAB -->
+            <div class="tab-content active" id="tab-posts">
+                <div class="dashboard-header">
+                    <h2>Blog Posts</h2>
+                    <button class="btn btn-primary" onclick="openEditor()">+ New Post</button>
+                </div>
+                <div id="posts-list"></div>
+            </div>
+
+            <!-- PROFILE TAB -->
+            <div class="tab-content" id="tab-profile">
+                <div class="error-msg" id="profile-error"></div>
+                <div class="success-msg" id="profile-success"></div>
+
+                <!-- Photo -->
+                <div class="admin-section">
+                    <h3>Profile Photo</h3>
+                    <div class="photo-upload-area">
+                        <div class="photo-preview" id="photo-preview">
+                            <div class="photo-preview-placeholder">No photo</div>
+                        </div>
+                        <div>
+                            <input type="file" id="photo-input" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="handlePhotoSelect(event)">
+                            <button class="btn btn-secondary" onclick="document.getElementById('photo-input').click()">Upload Photo</button>
+                            <p class="form-help">JPG or PNG. Will be displayed in your About section.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bio -->
+                <div class="admin-section">
+                    <h3>About</h3>
+                    <div class="form-group">
+                        <label>Headline</label>
+                        <input type="text" id="profile-headline" placeholder="Building at the intersection of AI and growth.">
+                    </div>
+                    <div class="form-group">
+                        <label>Bio (separate paragraphs with blank lines)</label>
+                        <textarea id="profile-bio" rows="8" placeholder="Write your bio..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Tags</label>
+                        <div class="tags-container" id="tags-container"></div>
+                        <div class="tag-add-row">
+                            <input type="text" id="new-tag-input" placeholder="Add a tag..." onkeydown="if(event.key==='Enter'){addTag();event.preventDefault();}">
+                            <button class="btn btn-secondary btn-sm" onclick="addTag()">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience -->
+                <div class="admin-section">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;padding-bottom:0.75rem;border-bottom:1px solid var(--gray-700);">
+                        <h3 style="margin:0;padding:0;border:0;">Work Experience</h3>
+                        <button class="btn btn-primary btn-sm" onclick="openExpModal()">+ Add</button>
+                    </div>
+                    <div id="experience-list"></div>
+                </div>
+
+                <button class="btn btn-primary" onclick="saveProfile()" style="margin-top:0.5rem;">Save Profile</button>
+            </div>
+
+            <!-- RESUME TAB -->
+            <div class="tab-content" id="tab-resume">
+                <div class="admin-section">
+                    <h3>Resume / CV</h3>
+                    <div class="resume-status" id="resume-status">
+                        <div class="resume-status-icon">&#128196;</div>
+                        <div class="resume-status-text">
+                            <strong id="resume-status-label">No resume uploaded</strong>
+                            <span id="resume-status-detail">Upload a PDF to make it available on your site.</span>
+                        </div>
+                    </div>
+                    <input type="file" id="resume-input" accept=".pdf" style="display:none" onchange="handleResumeSelect(event)">
+                    <div style="display:flex;gap:0.75rem;">
+                        <button class="btn btn-primary" onclick="document.getElementById('resume-input').click()">Upload Resume (PDF)</button>
+                        <a id="resume-download" class="btn btn-secondary" style="display:none;" target="_blank">Download Current</a>
+                        <button id="resume-remove-btn" class="btn btn-danger" style="display:none;" onclick="removeResume()">Remove</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -739,6 +1013,33 @@ Code block
         </div>
     </div>
 
+    <!-- ===== EXPERIENCE MODAL ===== -->
+    <div class="modal-overlay" id="exp-modal">
+        <div class="modal modal-wide">
+            <h3 id="exp-modal-title">Add Experience</h3>
+            <div class="form-group">
+                <label>Job Title</label>
+                <input type="text" id="exp-title" placeholder="e.g. Global BD Lead, Generative AI">
+            </div>
+            <div class="form-group">
+                <label>Company</label>
+                <input type="text" id="exp-company" placeholder="e.g. Amazon Web Services (AWS)">
+            </div>
+            <div class="form-group">
+                <label>Period</label>
+                <input type="text" id="exp-period" placeholder="e.g. 2020 - Present">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="exp-description" rows="3" placeholder="Brief description of your role..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary btn-sm" onclick="closeExpModal()">Cancel</button>
+                <button class="btn btn-primary btn-sm" onclick="saveExperience()">Save</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== LOADING OVERLAY ===== -->
     <div class="loading-overlay" id="loading-overlay">
         <div class="spinner"></div>
@@ -816,7 +1117,7 @@ Code block
 
                 document.getElementById('username-display').textContent = user.login;
 
-                await loadPosts();
+                await Promise.all([loadPosts(), loadSiteContent()]);
                 showView('dashboard');
                 hideLoading();
             } catch (err) {
@@ -1106,10 +1407,10 @@ Code block
                     githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}`).then(res => res.json()).then(repo => {
                         CONFIG.branch = repo.default_branch || 'main';
                         sessionStorage.setItem('gh_branch', CONFIG.branch);
-                        loadPosts();
+                        Promise.all([loadPosts(), loadSiteContent()]);
                     });
                 } else {
-                    loadPosts();
+                    Promise.all([loadPosts(), loadSiteContent()]);
                 }
                 showView('dashboard');
             }
@@ -1210,6 +1511,335 @@ Code block
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+        // ===== TABS =====
+        function switchTab(tabName) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.admin-tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            if (tabName === 'profile') loadSiteContentUI();
+            if (tabName === 'resume') loadResumeUI();
+        }
+
+        // ===== SITE CONTENT =====
+        let siteContent = { profile: { photo: '', headline: '', bio: '', tags: [] }, experience: [], resume: '' };
+        let siteContentSha = null;
+
+        async function loadSiteContent() {
+            try {
+                const res = await githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/contents/site-content.json?ref=${CONFIG.branch}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    siteContentSha = data.sha;
+                    const content = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
+                    siteContent = JSON.parse(content);
+                } else {
+                    siteContentSha = null;
+                }
+            } catch (e) {
+                siteContentSha = null;
+            }
+        }
+
+        async function saveSiteContent(commitMessage) {
+            const content = btoa(unescape(encodeURIComponent(JSON.stringify(siteContent, null, 2))));
+            const body = { message: commitMessage || 'Update site content', content, branch: CONFIG.branch };
+            if (siteContentSha) body.sha = siteContentSha;
+            const res = await githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/contents/site-content.json`, { method: 'PUT', body });
+            if (res.ok) {
+                const data = await res.json();
+                siteContentSha = data.content.sha;
+                return { ok: true };
+            }
+            let errorMsg = `GitHub API error (${res.status})`;
+            try { const d = await res.json(); errorMsg = d.message || errorMsg; } catch(e) {}
+            return { ok: false, error: errorMsg };
+        }
+
+        function loadSiteContentUI() {
+            document.getElementById('profile-headline').value = siteContent.profile.headline || '';
+            document.getElementById('profile-bio').value = siteContent.profile.bio || '';
+            renderTags();
+            renderPhotoPreview();
+            renderExperienceList();
+        }
+
+        // ===== PHOTO =====
+        let pendingPhoto = null; // { base64, name, ext }
+
+        function renderPhotoPreview() {
+            const container = document.getElementById('photo-preview');
+            if (pendingPhoto) {
+                container.innerHTML = `<img src="data:image/${pendingPhoto.ext === 'png' ? 'png' : 'jpeg'};base64,${pendingPhoto.base64}" alt="Preview">`;
+            } else if (siteContent.profile.photo) {
+                container.innerHTML = `<img src="/${siteContent.profile.photo}" alt="Profile photo">`;
+            } else {
+                container.innerHTML = '<div class="photo-preview-placeholder">No photo</div>';
+            }
+        }
+
+        function handlePhotoSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (file.size > 5 * 1024 * 1024) { showToast('Photo must be under 5MB', 'error'); return; }
+            const ext = file.name.split('.').pop().toLowerCase();
+            if (!['jpg','jpeg','png','webp'].includes(ext)) { showToast('Use JPG, PNG, or WebP', 'error'); return; }
+            const reader = new FileReader();
+            reader.onload = () => {
+                pendingPhoto = { base64: reader.result.split(',')[1], name: file.name, ext };
+                renderPhotoPreview();
+                showToast('Photo selected. Click "Save Profile" to upload.', 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function uploadFile(base64, filePath, commitMsg) {
+            // Check if file exists to get SHA
+            let sha = null;
+            try {
+                const res = await githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${filePath}?ref=${CONFIG.branch}`);
+                if (res.ok) { const d = await res.json(); sha = d.sha; }
+            } catch(e) {}
+
+            const body = { message: commitMsg, content: base64, branch: CONFIG.branch };
+            if (sha) body.sha = sha;
+
+            const res = await githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${filePath}`, { method: 'PUT', body });
+            if (res.ok) return { ok: true };
+            let errorMsg = `Upload failed (${res.status})`;
+            try { const d = await res.json(); errorMsg = d.message || errorMsg; } catch(e) {}
+            return { ok: false, error: errorMsg };
+        }
+
+        // ===== TAGS =====
+        function renderTags() {
+            const container = document.getElementById('tags-container');
+            const tags = siteContent.profile.tags || [];
+            container.innerHTML = tags.map((tag, i) =>
+                `<span class="tag-chip">${escapeHtml(tag)}<span class="tag-remove" onclick="removeTag(${i})">&times;</span></span>`
+            ).join('');
+        }
+
+        function addTag() {
+            const input = document.getElementById('new-tag-input');
+            const val = input.value.trim();
+            if (!val) return;
+            if (!siteContent.profile.tags) siteContent.profile.tags = [];
+            siteContent.profile.tags.push(val);
+            input.value = '';
+            renderTags();
+        }
+
+        function removeTag(index) {
+            siteContent.profile.tags.splice(index, 1);
+            renderTags();
+        }
+
+        // ===== EXPERIENCE =====
+        let editingExpIndex = null;
+
+        function renderExperienceList() {
+            const container = document.getElementById('experience-list');
+            const exps = siteContent.experience || [];
+            if (exps.length === 0) {
+                container.innerHTML = '<p style="color:var(--gray-500);">No experience added yet.</p>';
+                return;
+            }
+            container.innerHTML = exps.map((exp, i) => `
+                <div class="exp-admin-card">
+                    <div class="exp-admin-header">
+                        <div>
+                            <strong>${escapeHtml(exp.title)}</strong>
+                            <span style="color:var(--gray-500);font-size:0.9rem;"> at ${escapeHtml(exp.company)}</span>
+                        </div>
+                        <div class="post-actions">
+                            <button class="btn btn-secondary btn-sm" onclick="openExpModal(${i})">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="removeExperience(${i})">Remove</button>
+                        </div>
+                    </div>
+                    <div style="font-size:0.82rem;color:var(--accent);margin-top:0.25rem;">${escapeHtml(exp.period)}</div>
+                    <p style="font-size:0.88rem;color:var(--gray-400);margin-top:0.5rem;">${escapeHtml(exp.description)}</p>
+                </div>
+            `).join('');
+        }
+
+        function openExpModal(index) {
+            editingExpIndex = (index !== undefined) ? index : null;
+            document.getElementById('exp-modal-title').textContent = editingExpIndex !== null ? 'Edit Experience' : 'Add Experience';
+
+            if (editingExpIndex !== null) {
+                const exp = siteContent.experience[editingExpIndex];
+                document.getElementById('exp-title').value = exp.title || '';
+                document.getElementById('exp-company').value = exp.company || '';
+                document.getElementById('exp-period').value = exp.period || '';
+                document.getElementById('exp-description').value = exp.description || '';
+            } else {
+                document.getElementById('exp-title').value = '';
+                document.getElementById('exp-company').value = '';
+                document.getElementById('exp-period').value = '';
+                document.getElementById('exp-description').value = '';
+            }
+            document.getElementById('exp-modal').classList.add('active');
+        }
+
+        function closeExpModal() {
+            editingExpIndex = null;
+            document.getElementById('exp-modal').classList.remove('active');
+        }
+
+        function saveExperience() {
+            const title = document.getElementById('exp-title').value.trim();
+            const company = document.getElementById('exp-company').value.trim();
+            const period = document.getElementById('exp-period').value.trim();
+            const description = document.getElementById('exp-description').value.trim();
+
+            if (!title || !company) { showToast('Title and Company are required.', 'error'); return; }
+
+            if (!siteContent.experience) siteContent.experience = [];
+
+            const entry = { title, company, period, description };
+
+            if (editingExpIndex !== null) {
+                siteContent.experience[editingExpIndex] = entry;
+            } else {
+                siteContent.experience.push(entry);
+            }
+
+            closeExpModal();
+            renderExperienceList();
+            showToast('Experience updated. Click "Save Profile" to publish.', 'success');
+        }
+
+        function removeExperience(index) {
+            siteContent.experience.splice(index, 1);
+            renderExperienceList();
+        }
+
+        // ===== SAVE PROFILE =====
+        async function saveProfile() {
+            const errorEl = document.getElementById('profile-error');
+            const successEl = document.getElementById('profile-success');
+            errorEl.style.display = 'none';
+            successEl.style.display = 'none';
+
+            siteContent.profile.headline = document.getElementById('profile-headline').value.trim();
+            siteContent.profile.bio = document.getElementById('profile-bio').value;
+
+            showLoading('Saving profile...');
+
+            try {
+                // Upload photo if pending
+                if (pendingPhoto) {
+                    const photoPath = `assets/profile-photo.${pendingPhoto.ext === 'png' ? 'png' : 'jpg'}`;
+                    const uploadResult = await uploadFile(pendingPhoto.base64, photoPath, 'Update profile photo');
+                    if (uploadResult.ok) {
+                        siteContent.profile.photo = photoPath;
+                        pendingPhoto = null;
+                    } else {
+                        hideLoading();
+                        showError(errorEl, `Photo upload failed: ${uploadResult.error}`);
+                        return;
+                    }
+                }
+
+                // Reload to get latest SHA
+                await loadSiteContent();
+                siteContent.profile.headline = document.getElementById('profile-headline').value.trim();
+                siteContent.profile.bio = document.getElementById('profile-bio').value;
+
+                const result = await saveSiteContent('Update profile');
+                hideLoading();
+
+                if (result.ok) {
+                    showToast('Profile saved! Site will rebuild in ~1 min.', 'success');
+                    renderPhotoPreview();
+                } else {
+                    showError(errorEl, `Failed to save: ${result.error}`);
+                }
+            } catch (err) {
+                hideLoading();
+                showError(errorEl, `Error: ${err.message}`);
+            }
+        }
+
+        // ===== RESUME =====
+        function loadResumeUI() {
+            const label = document.getElementById('resume-status-label');
+            const detail = document.getElementById('resume-status-detail');
+            const downloadBtn = document.getElementById('resume-download');
+            const removeBtn = document.getElementById('resume-remove-btn');
+
+            if (siteContent.resume) {
+                label.textContent = 'Resume uploaded';
+                detail.textContent = siteContent.resume;
+                downloadBtn.href = `/${siteContent.resume}`;
+                downloadBtn.style.display = 'inline-flex';
+                removeBtn.style.display = 'inline-flex';
+            } else {
+                label.textContent = 'No resume uploaded';
+                detail.textContent = 'Upload a PDF to make it available on your site.';
+                downloadBtn.style.display = 'none';
+                removeBtn.style.display = 'none';
+            }
+        }
+
+        async function handleResumeSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (file.size > 10 * 1024 * 1024) { showToast('Resume must be under 10MB.', 'error'); return; }
+
+            showLoading('Uploading resume...');
+            const reader = new FileReader();
+            reader.onload = async () => {
+                try {
+                    const base64 = reader.result.split(',')[1];
+                    const filePath = 'assets/resume.pdf';
+
+                    const uploadResult = await uploadFile(base64, filePath, 'Upload resume');
+                    if (!uploadResult.ok) {
+                        hideLoading();
+                        showToast(`Resume upload failed: ${uploadResult.error}`, 'error');
+                        return;
+                    }
+
+                    await loadSiteContent();
+                    siteContent.resume = filePath;
+                    const result = await saveSiteContent('Update resume link');
+                    hideLoading();
+
+                    if (result.ok) {
+                        showToast('Resume uploaded! Site will rebuild in ~1 min.', 'success');
+                        loadResumeUI();
+                    } else {
+                        showToast(`Failed to save: ${result.error}`, 'error');
+                    }
+                } catch (err) {
+                    hideLoading();
+                    showToast(`Error: ${err.message}`, 'error');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function removeResume() {
+            showLoading('Removing resume...');
+            try {
+                await loadSiteContent();
+                siteContent.resume = '';
+                const result = await saveSiteContent('Remove resume');
+                hideLoading();
+                if (result.ok) {
+                    showToast('Resume removed.', 'success');
+                    loadResumeUI();
+                } else {
+                    showToast(`Failed: ${result.error}`, 'error');
+                }
+            } catch (err) {
+                hideLoading();
+                showToast(`Error: ${err.message}`, 'error');
+            }
         }
 
         // ===== MARKDOWN RENDERER =====

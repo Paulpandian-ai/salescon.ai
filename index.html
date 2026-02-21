@@ -904,30 +904,33 @@
             <div class="section-label">About</div>
             <div class="section-title">Revenue leader.<br>AI strategist. Builder.</div>
             <div class="about-grid reveal">
-                <div class="about-image">
+                <div class="about-image" id="about-image">
                     <div class="about-image-placeholder">
                         [ Your photo here ]<br>
                         <small>Replace with professional headshot</small>
                     </div>
                 </div>
                 <div class="about-text">
-                    <h3>Building at the intersection of AI and growth.</h3>
-                    <p>
-                        With 20 years spanning business development, strategic partnerships, and go-to-market leadership, I've had the privilege of driving transformative revenue growth at the world's largest cloud company.
-                    </p>
-                    <p>
-                        As Global Business Development Lead for Generative AI at Amazon Web Services, I architect partnerships with enterprise technology leaders like SAP and Databricks — deals that have collectively driven over $1 billion in annual recurring revenue.
-                    </p>
-                    <p>
-                        Currently completing my Executive MBA at Columbia Business School, I write about what the AI revolution means for revenue leaders, sales organizations, and the future of B2B growth.
-                    </p>
-                    <div class="about-tags">
+                    <h3 id="about-headline">Building at the intersection of AI and growth.</h3>
+                    <div id="about-bio">
+                        <p>
+                            With 20 years spanning business development, strategic partnerships, and go-to-market leadership, I've had the privilege of driving transformative revenue growth at the world's largest cloud company.
+                        </p>
+                        <p>
+                            As Global Business Development Lead for Generative AI at Amazon Web Services, I architect partnerships with enterprise technology leaders like SAP and Databricks — deals that have collectively driven over $1 billion in annual recurring revenue.
+                        </p>
+                        <p>
+                            Currently completing my Executive MBA at Columbia Business School, I write about what the AI revolution means for revenue leaders, sales organizations, and the future of B2B growth.
+                        </p>
+                    </div>
+                    <div class="about-tags" id="about-tags">
                         <span class="about-tag">AI Strategy</span>
                         <span class="about-tag">Revenue Growth</span>
                         <span class="about-tag">Enterprise Partnerships</span>
                         <span class="about-tag">Go-to-Market</span>
                         <span class="about-tag">Columbia EMBA</span>
                     </div>
+                    <a id="resume-link" href="#" class="btn-secondary" style="display:none;margin-top:1.5rem;width:fit-content;" target="_blank">Download Resume &rarr;</a>
                 </div>
             </div>
         </div>
@@ -1105,6 +1108,54 @@
                 }).join('');
             } catch (e) {
                 // Keep placeholder cards on error
+            }
+        })();
+
+        // Dynamic profile — loads from site-content.json if it exists
+        (async function loadProfile() {
+            try {
+                const res = await fetch('/site-content.json');
+                if (!res.ok) return;
+                const data = await res.json();
+
+                // Photo
+                if (data.profile && data.profile.photo) {
+                    const imgEl = document.getElementById('about-image');
+                    imgEl.innerHTML = `<img src="/${data.profile.photo}" alt="Paul Balasubramanian" style="width:100%;height:100%;object-fit:cover;">`;
+                }
+
+                // Headline
+                if (data.profile && data.profile.headline) {
+                    document.getElementById('about-headline').textContent = data.profile.headline;
+                }
+
+                // Bio
+                if (data.profile && data.profile.bio) {
+                    const paragraphs = data.profile.bio.split('\n\n').filter(p => p.trim());
+                    document.getElementById('about-bio').innerHTML = paragraphs.map(p => {
+                        const div = document.createElement('div');
+                        div.textContent = p.trim();
+                        return `<p>${div.innerHTML}</p>`;
+                    }).join('');
+                }
+
+                // Tags
+                if (data.profile && data.profile.tags && data.profile.tags.length > 0) {
+                    document.getElementById('about-tags').innerHTML = data.profile.tags.map(tag => {
+                        const div = document.createElement('div');
+                        div.textContent = tag;
+                        return `<span class="about-tag">${div.innerHTML}</span>`;
+                    }).join('');
+                }
+
+                // Resume link
+                if (data.resume) {
+                    const link = document.getElementById('resume-link');
+                    link.href = '/' + data.resume;
+                    link.style.display = 'inline-flex';
+                }
+            } catch (e) {
+                // Keep hardcoded content on error
             }
         })();
     </script>
