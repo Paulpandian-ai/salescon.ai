@@ -850,7 +850,7 @@
         <a href="#" class="nav-logo">sales<span>con</span>.ai</a>
         <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
         <ul class="nav-links">
-            <li><a href="#blog">Blog</a></li>
+            <li><a href="/blog.html">Blog</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#podcast">Podcast</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -939,7 +939,7 @@
             <div class="section-label">Latest Thinking</div>
             <div class="section-title">From the blog.</div>
             <p class="section-desc">Insights on AI-driven revenue, ecosystem growth strategy, and the evolving role of the modern CRO.</p>
-            <div class="blog-grid">
+            <div class="blog-grid" id="blog-grid">
                 <div class="blog-card reveal">
                     <div class="blog-category">AI &amp; Revenue</div>
                     <h3>The CRO's AI Playbook: 5 Ways GenAI is Rewriting B2B Sales</h3>
@@ -961,6 +961,9 @@
                     <div class="blog-card-meta">Coming Soon &middot; 7 min read</div>
                     <div class="blog-card-arrow">&rarr;</div>
                 </div>
+            </div>
+            <div style="text-align:center;margin-top:2rem;">
+                <a href="/blog.html" class="btn-secondary" style="display:inline-flex;">View All Posts &rarr;</a>
             </div>
         </div>
     </section>
@@ -1048,17 +1051,19 @@
         <div class="footer-inner">
             <a href="#" class="footer-logo">sales<span>con</span>.ai</a>
             <div class="footer-links">
-                <a href="#blog">Blog</a>
+                <a href="/blog.html">Blog</a>
                 <a href="#about">About</a>
                 <a href="#podcast">Podcast</a>
                 <a href="#contact">Contact</a>
+                <a href="/admin.html" style="opacity:0.4;">Admin</a>
             </div>
             <div class="footer-copy">&copy; 2026 Paul Balasubramanian. All rights reserved.</div>
         </div>
     </footer>
 
-    <!-- SCROLL REVEAL SCRIPT -->
+    <!-- SCRIPTS -->
     <script>
+        // Scroll reveal
         const reveals = document.querySelectorAll('.reveal');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1069,6 +1074,39 @@
         }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
         reveals.forEach(el => observer.observe(el));
+
+        // Dynamic blog posts — loads from blog-posts.json if published posts exist
+        (async function loadBlogPosts() {
+            try {
+                const res = await fetch('/blog-posts.json');
+                if (!res.ok) return;
+                const posts = await res.json();
+                const published = posts.filter(p => p.published).slice(0, 3);
+                if (published.length === 0) return; // Keep placeholder cards
+
+                const grid = document.getElementById('blog-grid');
+                grid.innerHTML = published.map(post => {
+                    const div = document.createElement('div');
+                    div.textContent = post.title;
+                    const safeTitle = div.innerHTML;
+                    div.textContent = post.category;
+                    const safeCat = div.innerHTML;
+                    div.textContent = post.excerpt;
+                    const safeExcerpt = div.innerHTML;
+                    return `
+                        <a href="/post.html?id=${encodeURIComponent(post.id)}" class="blog-card reveal visible" style="text-decoration:none;color:inherit;display:block;">
+                            <div class="blog-category">${safeCat}</div>
+                            <h3>${safeTitle}</h3>
+                            <p>${safeExcerpt}</p>
+                            <div class="blog-card-meta">${post.date} &middot; ${post.readTime}</div>
+                            <div class="blog-card-arrow">&rarr;</div>
+                        </a>
+                    `;
+                }).join('');
+            } catch (e) {
+                // Keep placeholder cards on error
+            }
+        })();
     </script>
 
 </body>
