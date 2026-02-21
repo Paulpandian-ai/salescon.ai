@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — SalesCon.ai</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a1628;
+            --white: #edf2f7;
+            --accent: #4F8CFF;
+            --accent-dim: #3A75E8;
+            --accent-glow: rgba(79, 140, 255, 0.18);
+            --gray-900: #0f1d32;
+            --gray-800: #162440;
+            --gray-700: #1e3050;
+            --gray-500: #5a7ea3;
+            --gray-400: #7b9fc2;
+            --gray-300: #a8c5e2;
+            --font: 'Inter', sans-serif;
+            --red: #ff4f4f;
+            --green: #34d399;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: var(--font);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ===== TOP BAR ===== */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 22, 40, 0.9);
+            border-bottom: 1px solid rgba(79, 140, 255, 0.08);
+        }
+
+        .topbar-logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--white);
+            text-decoration: none;
+        }
+        .topbar-logo span { color: var(--accent); }
+        .topbar-logo small {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--gray-500);
+            margin-left: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .topbar-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .topbar-user {
+            font-size: 0.85rem;
+            color: var(--gray-400);
+        }
+        .topbar-user strong { color: var(--accent); }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-family: var(--font);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--accent-dim);
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid var(--gray-700);
+        }
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-danger {
+            background: transparent;
+            color: var(--red);
+            border: 1px solid rgba(255, 79, 79, 0.3);
+        }
+        .btn-danger:hover {
+            background: rgba(255, 79, 79, 0.1);
+            border-color: var(--red);
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.85rem;
+            font-size: 0.78rem;
+        }
+
+        /* ===== LOGIN VIEW ===== */
+        .login-view {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .login-card {
+            background: var(--gray-900);
+            border: 1px solid rgba(79, 140, 255, 0.1);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 440px;
+            width: 100%;
+        }
+
+        .login-card h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-card p {
+            color: var(--gray-400);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: var(--gray-800);
+            border: 1px solid var(--gray-700);
+            border-radius: 8px;
+            color: var(--white);
+            font-family: var(--font);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: var(--gray-500); }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus { border-color: var(--accent); }
+        .form-group select { appearance: none; }
+        .form-group select option { background: var(--gray-800); }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+
+        .login-help {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-700);
+        }
+
+        .login-help summary {
+            font-size: 0.85rem;
+            color: var(--accent);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .login-help ol {
+            margin-top: 0.75rem;
+            padding-left: 1.25rem;
+            color: var(--gray-400);
+            font-size: 0.82rem;
+            line-height: 1.8;
+        }
+
+        .login-help code {
+            background: var(--gray-800);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.78rem;
+        }
+
+        .error-msg {
+            background: rgba(255, 79, 79, 0.1);
+            border: 1px solid rgba(255, 79, 79, 0.3);
+            color: var(--red);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-msg {
+            background: rgba(52, 211, 153, 0.1);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: var(--green);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        /* ===== DASHBOARD VIEW ===== */
+        .dashboard-view {
+            display: none;
+        }
+
+        .dashboard-content {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .posts-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .posts-table th {
+            text-align: left;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--gray-700);
+        }
+
+        .posts-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(79, 140, 255, 0.06);
+            font-size: 0.9rem;
+            vertical-align: middle;
+        }
+
+        .posts-table tr:hover td {
+            background: rgba(79, 140, 255, 0.03);
+        }
+
+        .post-title-cell {
+            font-weight: 600;
+        }
+
+        .post-category-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(79, 140, 255, 0.1);
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+        }
+
+        .post-status-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+        }
+        .post-status-badge.published {
+            color: var(--green);
+            background: rgba(52, 211, 153, 0.1);
+        }
+        .post-status-badge.draft {
+            color: var(--gray-400);
+            background: rgba(123, 159, 194, 0.1);
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray-500);
+        }
+        .empty-state h3 {
+            font-size: 1.3rem;
+            color: var(--gray-400);
+            margin-bottom: 0.75rem;
+        }
+        .empty-state p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===== EDITOR VIEW ===== */
+        .editor-view {
+            display: none;
+        }
+
+        .editor-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .editor-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .editor-header-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .editor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .editor-panel {
+            background: var(--gray-900);
+            border: 1px solid rgba(79, 140, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .editor-panel h3 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.25rem;
+        }
+
+        .editor-meta-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        #editor-content {
+            min-height: 400px;
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            tab-size: 4;
+        }
+
+        .preview-panel {
+            max-height: 700px;
+            overflow-y: auto;
+        }
+
+        .preview-panel::-webkit-scrollbar { width: 6px; }
+        .preview-panel::-webkit-scrollbar-track { background: transparent; }
+        .preview-panel::-webkit-scrollbar-thumb { background: var(--gray-700); border-radius: 3px; }
+
+        .preview-content {
+            line-height: 1.8;
+            color: var(--gray-300);
+        }
+        .preview-content h1 { font-size: 2rem; font-weight: 800; color: var(--white); margin: 1.5rem 0 0.75rem; letter-spacing: -0.02em; }
+        .preview-content h2 { font-size: 1.5rem; font-weight: 700; color: var(--white); margin: 1.25rem 0 0.5rem; letter-spacing: -0.01em; }
+        .preview-content h3 { font-size: 1.2rem; font-weight: 700; color: var(--white); margin: 1rem 0 0.5rem; }
+        .preview-content p { margin-bottom: 1rem; }
+        .preview-content strong { color: var(--white); font-weight: 600; }
+        .preview-content a { color: var(--accent); }
+        .preview-content blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            color: var(--gray-400);
+            margin: 1rem 0;
+            font-style: italic;
+        }
+        .preview-content pre {
+            background: var(--gray-800);
+            border: 1px solid var(--gray-700);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+        }
+        .preview-content code {
+            background: var(--gray-800);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.88em;
+        }
+        .preview-content pre code {
+            background: none;
+            padding: 0;
+        }
+        .preview-content ul, .preview-content ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .preview-content li { margin-bottom: 0.35rem; }
+        .preview-content img { max-width: 100%; border-radius: 8px; margin: 1rem 0; }
+        .preview-content hr { border: none; border-top: 1px solid var(--gray-700); margin: 2rem 0; }
+
+        .char-count {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            text-align: right;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== LOADING SPINNER ===== */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 22, 40, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .loading-overlay.active { display: flex; }
+        .loading-overlay .spinner {
+            width: 32px;
+            height: 32px;
+            border-width: 3px;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 22, 40, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: var(--gray-900);
+            border: 1px solid rgba(79, 140, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 440px;
+            width: 100%;
+        }
+        .modal h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+        }
+        .modal p {
+            color: var(--gray-400);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.85rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            z-index: 300;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .toast.success {
+            background: rgba(52, 211, 153, 0.15);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: var(--green);
+        }
+        .toast.error {
+            background: rgba(255, 79, 79, 0.15);
+            border: 1px solid rgba(255, 79, 79, 0.3);
+            color: var(--red);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .editor-grid { grid-template-columns: 1fr; }
+            .editor-meta-row { grid-template-columns: 1fr; }
+            .dashboard-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+        }
+
+        @media (max-width: 600px) {
+            .login-card { padding: 2rem 1.5rem; }
+            .topbar { padding: 0.75rem 1rem; }
+            .dashboard-content, .editor-content { padding: 0 1rem; }
+            .posts-table { font-size: 0.82rem; }
+            .posts-table th:nth-child(3),
+            .posts-table td:nth-child(3),
+            .posts-table th:nth-child(4),
+            .posts-table td:nth-child(4) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== LOGIN VIEW ===== -->
+    <div class="login-view" id="login-view">
+        <div class="login-card">
+            <a href="/" style="text-decoration:none;color:var(--white);font-weight:800;font-size:1.3rem;display:block;margin-bottom:2rem;">
+                sales<span style="color:var(--accent)">con</span>.ai
+            </a>
+            <h1>Admin Login</h1>
+            <p>Sign in with your GitHub Personal Access Token to manage blog posts.</p>
+
+            <div class="error-msg" id="login-error"></div>
+
+            <div class="form-group">
+                <label>GitHub Personal Access Token</label>
+                <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            </div>
+
+            <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="handleLogin()">
+                Sign In
+            </button>
+
+            <div class="login-help">
+                <details>
+                    <summary>How to get a Personal Access Token</summary>
+                    <ol>
+                        <li>Go to <strong>GitHub.com</strong> &rarr; Settings &rarr; Developer Settings</li>
+                        <li>Click <strong>Personal Access Tokens</strong> &rarr; Tokens (classic)</li>
+                        <li>Click <strong>Generate new token</strong> (classic)</li>
+                        <li>Give it a name like <code>salescon-admin</code></li>
+                        <li>Select the <strong>repo</strong> scope (full control of repositories)</li>
+                        <li>Click <strong>Generate token</strong> and copy it</li>
+                        <li>Paste it above — it's only stored in your browser session</li>
+                    </ol>
+                </details>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== DASHBOARD VIEW ===== -->
+    <div class="dashboard-view" id="dashboard-view">
+        <div class="topbar">
+            <a href="/" class="topbar-logo">
+                sales<span>con</span>.ai
+                <small>Admin</small>
+            </a>
+            <div class="topbar-actions">
+                <span class="topbar-user">Logged in as <strong id="username-display"></strong></span>
+                <a href="/" class="btn btn-secondary btn-sm">View Site</a>
+                <button class="btn btn-secondary btn-sm" onclick="handleLogout()">Logout</button>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h2>Blog Posts</h2>
+                <button class="btn btn-primary" onclick="openEditor()">+ New Post</button>
+            </div>
+
+            <div id="posts-list"></div>
+        </div>
+    </div>
+
+    <!-- ===== EDITOR VIEW ===== -->
+    <div class="editor-view" id="editor-view">
+        <div class="topbar">
+            <a href="/" class="topbar-logo">
+                sales<span>con</span>.ai
+                <small>Editor</small>
+            </a>
+            <div class="topbar-actions editor-header-actions">
+                <button class="btn btn-secondary btn-sm" onclick="closeEditor()">Cancel</button>
+                <button class="btn btn-secondary btn-sm" onclick="savePost(false)">Save Draft</button>
+                <button class="btn btn-primary btn-sm" onclick="savePost(true)" id="publish-btn">Publish</button>
+            </div>
+        </div>
+
+        <div class="editor-content">
+            <div class="error-msg" id="editor-error" style="margin-bottom:1rem;"></div>
+            <div class="success-msg" id="editor-success" style="margin-bottom:1rem;"></div>
+
+            <div class="form-group">
+                <input type="text" id="editor-title" placeholder="Post title..." style="font-size:1.5rem;font-weight:700;padding:1rem;background:transparent;border:1px solid var(--gray-700);">
+            </div>
+
+            <div class="editor-meta-row" style="margin-bottom:1.25rem;">
+                <div class="form-group" style="margin-bottom:0;">
+                    <label>Category</label>
+                    <select id="editor-category">
+                        <option value="AI & Revenue">AI & Revenue</option>
+                        <option value="Partnerships">Partnerships</option>
+                        <option value="Leadership">Leadership</option>
+                        <option value="Strategy">Strategy</option>
+                        <option value="Growth">Growth</option>
+                        <option value="General">General</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <label>Slug (URL)</label>
+                    <input type="text" id="editor-slug" placeholder="auto-generated-from-title">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Excerpt</label>
+                <textarea id="editor-excerpt" rows="2" placeholder="Short description for blog cards and SEO..."></textarea>
+            </div>
+
+            <div class="editor-grid">
+                <div class="editor-panel">
+                    <h3>Content (Markdown)</h3>
+                    <textarea id="editor-content" placeholder="Write your post in Markdown...
+
+# Heading 1
+## Heading 2
+
+**Bold text** and *italic text*
+
+- Bullet point
+- Another point
+
+> A blockquote
+
+[Link text](https://example.com)
+
+```
+Code block
+```"></textarea>
+                    <div class="char-count" id="char-count">0 words &middot; 0 min read</div>
+                </div>
+                <div class="editor-panel preview-panel">
+                    <h3>Preview</h3>
+                    <div class="preview-content" id="preview-content">
+                        <p style="color:var(--gray-500);">Start writing to see the preview...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== DELETE MODAL ===== -->
+    <div class="modal-overlay" id="delete-modal">
+        <div class="modal">
+            <h3>Delete Post</h3>
+            <p>Are you sure you want to delete "<span id="delete-post-title"></span>"? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary btn-sm" onclick="closeDeleteModal()">Cancel</button>
+                <button class="btn btn-danger btn-sm" onclick="confirmDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== LOADING OVERLAY ===== -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+        <span id="loading-text" style="color:var(--gray-400);font-size:0.9rem;">Loading...</span>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ===== CONFIGURATION =====
+        const CONFIG = {
+            owner: 'Paulpandian-ai',
+            repo: 'salescon.ai',
+            branch: 'main',
+            filePath: 'blog-posts.json'
+        };
+
+        // ===== STATE =====
+        let state = {
+            token: '',
+            username: '',
+            posts: [],
+            fileSha: null,
+            editingPostId: null
+        };
+
+        // ===== AUTH =====
+        async function handleLogin() {
+            const token = document.getElementById('token-input').value.trim();
+            const errorEl = document.getElementById('login-error');
+
+            if (!token) {
+                showError(errorEl, 'Please enter your GitHub Personal Access Token.');
+                return;
+            }
+
+            showLoading('Verifying token...');
+
+            try {
+                // Validate token by getting user info
+                const userRes = await githubAPI('/user', { token });
+                if (!userRes.ok) {
+                    hideLoading();
+                    showError(errorEl, 'Invalid token. Please check and try again.');
+                    return;
+                }
+
+                const user = await userRes.json();
+
+                // Check repo write access
+                const repoRes = await githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}`, { token });
+                if (!repoRes.ok) {
+                    hideLoading();
+                    showError(errorEl, 'Cannot access the repository. Ensure your token has repo scope.');
+                    return;
+                }
+
+                const repo = await repoRes.json();
+                if (!repo.permissions || !repo.permissions.push) {
+                    hideLoading();
+                    showError(errorEl, 'Your token does not have write access to this repository.');
+                    return;
+                }
+
+                // Success — store in session
+                state.token = token;
+                state.username = user.login;
+                sessionStorage.setItem('gh_token', token);
+                sessionStorage.setItem('gh_username', user.login);
+
+                document.getElementById('username-display').textContent = user.login;
+
+                await loadPosts();
+                showView('dashboard');
+                hideLoading();
+            } catch (err) {
+                hideLoading();
+                showError(errorEl, 'Network error. Please check your connection and try again.');
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('gh_token');
+            sessionStorage.removeItem('gh_username');
+            state.token = '';
+            state.username = '';
+            state.posts = [];
+            state.fileSha = null;
+            document.getElementById('token-input').value = '';
+            showView('login');
+        }
+
+        // ===== GITHUB API =====
+        async function githubAPI(endpoint, options = {}) {
+            const token = options.token || state.token;
+            const config = {
+                method: options.method || 'GET',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            };
+            if (options.body) {
+                config.headers['Content-Type'] = 'application/json';
+                config.body = JSON.stringify(options.body);
+            }
+            return fetch(`https://api.github.com${endpoint}`, config);
+        }
+
+        // ===== POSTS CRUD =====
+        async function loadPosts() {
+            try {
+                const res = await githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.filePath}?ref=${CONFIG.branch}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    state.fileSha = data.sha;
+                    const content = atob(data.content.replace(/\n/g, ''));
+                    state.posts = JSON.parse(content);
+                } else if (res.status === 404) {
+                    state.posts = [];
+                    state.fileSha = null;
+                }
+            } catch (err) {
+                state.posts = [];
+                state.fileSha = null;
+            }
+            renderDashboard();
+        }
+
+        async function savePosts(commitMessage) {
+            const content = btoa(unescape(encodeURIComponent(JSON.stringify(state.posts, null, 2))));
+            const body = {
+                message: commitMessage,
+                content: content,
+                branch: CONFIG.branch
+            };
+            if (state.fileSha) {
+                body.sha = state.fileSha;
+            }
+            const res = await githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.filePath}`, {
+                method: 'PUT',
+                body: body
+            });
+            if (res.ok) {
+                const data = await res.json();
+                state.fileSha = data.content.sha;
+                return true;
+            }
+            return false;
+        }
+
+        async function savePost(publish) {
+            const title = document.getElementById('editor-title').value.trim();
+            const category = document.getElementById('editor-category').value;
+            const slug = document.getElementById('editor-slug').value.trim() || generateSlug(title);
+            const excerpt = document.getElementById('editor-excerpt').value.trim();
+            const content = document.getElementById('editor-content').value;
+            const errorEl = document.getElementById('editor-error');
+            const successEl = document.getElementById('editor-success');
+
+            errorEl.style.display = 'none';
+            successEl.style.display = 'none';
+
+            if (!title) { showError(errorEl, 'Please enter a title.'); return; }
+            if (!excerpt) { showError(errorEl, 'Please enter an excerpt.'); return; }
+            if (!content) { showError(errorEl, 'Please write some content.'); return; }
+
+            // Check for duplicate slug (excluding current post if editing)
+            const duplicateSlug = state.posts.find(p => p.id === slug && p.id !== state.editingPostId);
+            if (duplicateSlug) {
+                showError(errorEl, 'A post with this slug already exists. Please use a different slug.');
+                return;
+            }
+
+            showLoading(publish ? 'Publishing...' : 'Saving draft...');
+
+            try {
+                // Reload posts to get latest SHA
+                await loadPosts();
+
+                const wordCount = content.split(/\s+/).filter(w => w.length > 0).length;
+                const readTime = Math.max(1, Math.ceil(wordCount / 250));
+                const now = new Date().toISOString().split('T')[0];
+
+                if (state.editingPostId) {
+                    // Update existing post
+                    const idx = state.posts.findIndex(p => p.id === state.editingPostId);
+                    if (idx !== -1) {
+                        state.posts[idx] = {
+                            ...state.posts[idx],
+                            title,
+                            category,
+                            id: slug,
+                            excerpt,
+                            content,
+                            readTime: `${readTime} min read`,
+                            published: publish,
+                            updatedAt: now
+                        };
+                    }
+                } else {
+                    // Create new post
+                    const post = {
+                        id: slug,
+                        title,
+                        category,
+                        excerpt,
+                        content,
+                        date: now,
+                        readTime: `${readTime} min read`,
+                        published: publish,
+                        author: 'Paul Balasubramanian'
+                    };
+                    state.posts.unshift(post);
+                }
+
+                const action = state.editingPostId ? 'Update' : 'Add';
+                const status = publish ? 'published' : 'draft';
+                const ok = await savePosts(`${action} blog post: ${title} [${status}]`);
+
+                hideLoading();
+
+                if (ok) {
+                    showToast(publish ? 'Post published! Site will rebuild in ~1 min.' : 'Draft saved!', 'success');
+                    closeEditor();
+                    await loadPosts();
+                } else {
+                    showError(errorEl, 'Failed to save. Check your token permissions and try again.');
+                }
+            } catch (err) {
+                hideLoading();
+                showError(errorEl, `Error: ${err.message}`);
+            }
+        }
+
+        let deletePostId = null;
+
+        function openDeleteModal(id) {
+            deletePostId = id;
+            const post = state.posts.find(p => p.id === id);
+            document.getElementById('delete-post-title').textContent = post ? post.title : '';
+            document.getElementById('delete-modal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            deletePostId = null;
+            document.getElementById('delete-modal').classList.remove('active');
+        }
+
+        async function confirmDelete() {
+            if (!deletePostId) return;
+            closeDeleteModal();
+            showLoading('Deleting post...');
+
+            try {
+                await loadPosts();
+                const post = state.posts.find(p => p.id === deletePostId);
+                state.posts = state.posts.filter(p => p.id !== deletePostId);
+                const ok = await savePosts(`Delete blog post: ${post ? post.title : deletePostId}`);
+
+                hideLoading();
+
+                if (ok) {
+                    showToast('Post deleted.', 'success');
+                    await loadPosts();
+                } else {
+                    showToast('Failed to delete.', 'error');
+                    await loadPosts();
+                }
+            } catch (err) {
+                hideLoading();
+                showToast('Error deleting post.', 'error');
+            }
+        }
+
+        // ===== EDITOR =====
+        function openEditor(postId) {
+            state.editingPostId = postId || null;
+
+            document.getElementById('editor-title').value = '';
+            document.getElementById('editor-category').value = 'AI & Revenue';
+            document.getElementById('editor-slug').value = '';
+            document.getElementById('editor-excerpt').value = '';
+            document.getElementById('editor-content').value = '';
+            document.getElementById('preview-content').innerHTML = '<p style="color:var(--gray-500);">Start writing to see the preview...</p>';
+            document.getElementById('editor-error').style.display = 'none';
+            document.getElementById('editor-success').style.display = 'none';
+            updateCharCount();
+
+            if (postId) {
+                const post = state.posts.find(p => p.id === postId);
+                if (post) {
+                    document.getElementById('editor-title').value = post.title;
+                    document.getElementById('editor-category').value = post.category;
+                    document.getElementById('editor-slug').value = post.id;
+                    document.getElementById('editor-excerpt').value = post.excerpt;
+                    document.getElementById('editor-content').value = post.content;
+                    document.getElementById('publish-btn').textContent = post.published ? 'Update' : 'Publish';
+                    updatePreview();
+                    updateCharCount();
+                }
+            } else {
+                document.getElementById('publish-btn').textContent = 'Publish';
+            }
+
+            showView('editor');
+        }
+
+        function closeEditor() {
+            state.editingPostId = null;
+            showView('dashboard');
+        }
+
+        function updatePreview() {
+            const md = document.getElementById('editor-content').value;
+            document.getElementById('preview-content').innerHTML = md ? renderMarkdown(md) : '<p style="color:var(--gray-500);">Start writing to see the preview...</p>';
+        }
+
+        function updateCharCount() {
+            const text = document.getElementById('editor-content').value;
+            const words = text.split(/\s+/).filter(w => w.length > 0).length;
+            const readTime = Math.max(1, Math.ceil(words / 250));
+            document.getElementById('char-count').textContent = `${words} words \u00b7 ${readTime} min read`;
+        }
+
+        // Auto-generate slug from title
+        document.addEventListener('DOMContentLoaded', () => {
+            const titleInput = document.getElementById('editor-title');
+            const slugInput = document.getElementById('editor-slug');
+            const contentInput = document.getElementById('editor-content');
+
+            titleInput.addEventListener('input', () => {
+                if (!state.editingPostId) {
+                    slugInput.value = generateSlug(titleInput.value);
+                }
+            });
+
+            contentInput.addEventListener('input', () => {
+                updatePreview();
+                updateCharCount();
+            });
+
+            // Check for existing session
+            const savedToken = sessionStorage.getItem('gh_token');
+            const savedUsername = sessionStorage.getItem('gh_username');
+            if (savedToken && savedUsername) {
+                state.token = savedToken;
+                state.username = savedUsername;
+                document.getElementById('username-display').textContent = savedUsername;
+                showView('dashboard');
+                loadPosts();
+            }
+        });
+
+        // ===== RENDER =====
+        function renderDashboard() {
+            const container = document.getElementById('posts-list');
+
+            if (state.posts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No posts yet</h3>
+                        <p>Create your first blog post to get started.</p>
+                        <button class="btn btn-primary" onclick="openEditor()">+ New Post</button>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = `
+                <table class="posts-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            for (const post of state.posts) {
+                const statusClass = post.published ? 'published' : 'draft';
+                const statusText = post.published ? 'Published' : 'Draft';
+                html += `
+                    <tr>
+                        <td class="post-title-cell">${escapeHtml(post.title)}</td>
+                        <td><span class="post-category-badge">${escapeHtml(post.category)}</span></td>
+                        <td style="color:var(--gray-500);font-size:0.85rem;">${post.date || '—'}</td>
+                        <td><span class="post-status-badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <div class="post-actions">
+                                <button class="btn btn-secondary btn-sm" onclick="openEditor('${post.id}')">Edit</button>
+                                <button class="btn btn-danger btn-sm" onclick="openDeleteModal('${post.id}')">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // ===== HELPERS =====
+        function showView(view) {
+            document.getElementById('login-view').style.display = view === 'login' ? 'flex' : 'none';
+            document.getElementById('dashboard-view').style.display = view === 'dashboard' ? 'block' : 'none';
+            document.getElementById('editor-view').style.display = view === 'editor' ? 'block' : 'none';
+        }
+
+        function showError(el, msg) {
+            el.textContent = msg;
+            el.style.display = 'block';
+        }
+
+        function showLoading(text) {
+            document.getElementById('loading-text').textContent = text || 'Loading...';
+            document.getElementById('loading-overlay').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-overlay').classList.remove('active');
+        }
+
+        function showToast(msg, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = `toast ${type}`;
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        function generateSlug(title) {
+            return title
+                .toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-|-$/g, '')
+                .substring(0, 80);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ===== MARKDOWN RENDERER =====
+        function renderMarkdown(md) {
+            // Escape HTML
+            let text = md.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+            // Code blocks
+            text = text.replace(/```(\w*)\n([\s\S]*?)```/g, function(match, lang, code) {
+                return `<pre><code>${code.trim()}</code></pre>`;
+            });
+
+            // Inline code
+            text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+            // Headings
+            text = text.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
+            text = text.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+            text = text.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+            text = text.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+
+            // Horizontal rules
+            text = text.replace(/^---$/gm, '<hr>');
+
+            // Bold + Italic
+            text = text.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+            text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+            // Images
+            text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+
+            // Links
+            text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+
+            // Blockquotes
+            text = text.replace(/^&gt; (.+)$/gm, '<blockquote>$1</blockquote>');
+
+            // Unordered lists
+            text = text.replace(/(^- .+$\n?)+/gm, function(match) {
+                const items = match.trim().split('\n').map(line => `<li>${line.replace(/^- /, '')}</li>`).join('');
+                return `<ul>${items}</ul>`;
+            });
+
+            // Ordered lists
+            text = text.replace(/(^\d+\. .+$\n?)+/gm, function(match) {
+                const items = match.trim().split('\n').map(line => `<li>${line.replace(/^\d+\. /, '')}</li>`).join('');
+                return `<ol>${items}</ol>`;
+            });
+
+            // Paragraphs: split on double newlines
+            const blocks = text.split(/\n\n+/);
+            text = blocks.map(block => {
+                block = block.trim();
+                if (!block) return '';
+                // Don't wrap block-level elements in <p>
+                if (/^<(h[1-6]|ul|ol|pre|blockquote|hr|img)/.test(block)) return block;
+                // Don't wrap if it's already a complete block element
+                if (/^<\/(h[1-6]|ul|ol|pre|blockquote)>$/.test(block)) return block;
+                return `<p>${block.replace(/\n/g, '<br>')}</p>`;
+            }).join('\n');
+
+            return text;
+        }
+    </script>
+
+</body>
+</html>
