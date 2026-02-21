@@ -1754,24 +1754,23 @@ Code block
             errorEl.style.display = 'none';
             successEl.style.display = 'none';
 
-            // Capture ALL form data before any async operations
+            // Read ALL form data right now
             const headline = document.getElementById('profile-headline').value.trim();
             const bio = document.getElementById('profile-bio').value;
             const tags = [...(siteContent.profile.tags || [])];
             const experience = [...(siteContent.experience || [])];
-            let photoPath = siteContent.profile.photo;
+            let photoPath = siteContent.profile.photo || '';
 
-            console.log('[saveProfile] Starting save. pendingPhoto:', !!pendingPhoto, 'currentPhotoPath:', photoPath);
+            console.log('[saveProfile] Start. pendingPhoto:', !!pendingPhoto, 'photoPath:', photoPath);
 
             showLoading('Saving profile...');
 
             try {
-                // Upload photo if pending
+                // 1) Upload photo file if user selected one
                 if (pendingPhoto) {
                     photoPath = `assets/profile-photo.${pendingPhoto.ext === 'png' ? 'png' : 'jpg'}`;
-                    console.log('[saveProfile] Uploading photo to:', photoPath);
+                    console.log('[saveProfile] Uploading photo file to:', photoPath);
 
-                    // Cache the base64 data URL for preview before clearing pendingPhoto
                     lastUploadedPhotoDataUrl = `data:image/${pendingPhoto.ext === 'png' ? 'png' : 'jpeg'};base64,${pendingPhoto.base64}`;
 
                     const uploadResult = await uploadFile(pendingPhoto.base64, photoPath, 'Update profile photo');
@@ -1781,32 +1780,68 @@ Code block
                         showError(errorEl, `Photo upload failed: ${uploadResult.error}`);
                         return;
                     }
-                    console.log('[saveProfile] Photo uploaded successfully');
+                    console.log('[saveProfile] Photo file uploaded OK');
                     pendingPhoto = null;
                 }
 
-                // Reload to get the LATEST SHA, then re-apply all our changes
-                console.log('[saveProfile] Reloading site-content.json for latest SHA...');
-                await loadSiteContent();
-                console.log('[saveProfile] SHA after reload:', siteContentSha);
+                // 2) Build the complete object to save
+                const dataToSave = {
+                    profile: {
+                        photo: photoPath,
+                        headline: headline,
+                        bio: bio,
+                        tags: tags
+                    },
+                    experience: experience,
+                    resume: siteContent.resume || ''
+                };
 
-                siteContent.profile.headline = headline;
-                siteContent.profile.bio = bio;
-                siteContent.profile.tags = tags;
-                siteContent.profile.photo = photoPath;
-                siteContent.experience = experience;
+                console.log('[saveProfile] Data to save:', JSON.stringify(dataToSave).substring(0, 200));
 
-                console.log('[saveProfile] Saving site-content.json with photo path:', photoPath);
-                const result = await saveSiteContent('Update profile');
+                // 3) Save with retry on SHA conflict
+                let saved = false;
+                for (let attempt = 0; attempt < 3; attempt++) {
+                    if (attempt > 0) {
+                        console.log(`[saveProfile] Retry attempt ${attempt}, reloading SHA...`);
+                        await loadSiteContent();
+                    }
+
+                    const content = btoa(unescape(encodeURIComponent(JSON.stringify(dataToSave, null, 2))));
+                    const body = { message: 'Update profile', content, branch: CONFIG.branch };
+                    if (siteContentSha) body.sha = siteContentSha;
+
+                    console.log(`[saveProfile] PUT site-content.json (attempt ${attempt + 1}, sha: ${siteContentSha})`);
+                    const res = await githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/contents/site-content.json`, { method: 'PUT', body });
+
+                    if (res.ok) {
+                        const data = await res.json();
+                        siteContentSha = data.content.sha;
+                        siteContent = dataToSave; // update in-memory
+                        saved = true;
+                        console.log('[saveProfile] Saved! New SHA:', siteContentSha);
+                        break;
+                    }
+
+                    const status = res.status;
+                    let errMsg = '';
+                    try { const d = await res.json(); errMsg = d.message || ''; } catch(e) {}
+                    console.warn(`[saveProfile] Save failed (${status}): ${errMsg}`);
+
+                    if (status !== 409 && status !== 422) {
+                        // Not a conflict — don't retry
+                        hideLoading();
+                        showError(errorEl, `Failed to save: ${errMsg || `HTTP ${status}`}`);
+                        return;
+                    }
+                }
+
                 hideLoading();
 
-                if (result.ok) {
-                    console.log('[saveProfile] Profile saved successfully!');
+                if (saved) {
                     showToast('Profile saved! Site will rebuild in ~1 min.', 'success');
                     renderPhotoPreview();
                 } else {
-                    console.error('[saveProfile] Failed to save:', result.error);
-                    showError(errorEl, `Failed to save: ${result.error}`);
+                    showError(errorEl, 'Failed to save after 3 attempts. Please refresh and try again.');
                 }
             } catch (err) {
                 hideLoading();
