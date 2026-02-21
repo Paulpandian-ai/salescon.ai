@@ -753,7 +753,7 @@ Code block
         const CONFIG = {
             owner: 'Paulpandian-ai',
             repo: 'salescon.ai',
-            branch: 'main',
+            branch: '', // auto-detected on login
             filePath: 'blog-posts.json'
         };
 
@@ -800,15 +800,19 @@ Code block
                 const repo = await repoRes.json();
                 if (!repo.permissions || !repo.permissions.push) {
                     hideLoading();
-                    showError(errorEl, 'Your token does not have write access to this repository.');
+                    showError(errorEl, 'Your token does not have write access to this repository. Use a Classic token with "repo" scope.');
                     return;
                 }
+
+                // Auto-detect default branch
+                CONFIG.branch = repo.default_branch || 'main';
 
                 // Success — store in session
                 state.token = token;
                 state.username = user.login;
                 sessionStorage.setItem('gh_token', token);
                 sessionStorage.setItem('gh_username', user.login);
+                sessionStorage.setItem('gh_branch', CONFIG.branch);
 
                 document.getElementById('username-display').textContent = user.login;
 
@@ -886,9 +890,15 @@ Code block
             if (res.ok) {
                 const data = await res.json();
                 state.fileSha = data.content.sha;
-                return true;
+                return { ok: true };
             }
-            return false;
+            // Capture actual error from GitHub
+            let errorMsg = `GitHub API error (${res.status})`;
+            try {
+                const errData = await res.json();
+                errorMsg = errData.message || errorMsg;
+            } catch (e) {}
+            return { ok: false, error: errorMsg };
         }
 
         async function savePost(publish) {
@@ -958,16 +968,16 @@ Code block
 
                 const action = state.editingPostId ? 'Update' : 'Add';
                 const status = publish ? 'published' : 'draft';
-                const ok = await savePosts(`${action} blog post: ${title} [${status}]`);
+                const result = await savePosts(`${action} blog post: ${title} [${status}]`);
 
                 hideLoading();
 
-                if (ok) {
+                if (result.ok) {
                     showToast(publish ? 'Post published! Site will rebuild in ~1 min.' : 'Draft saved!', 'success');
                     closeEditor();
                     await loadPosts();
                 } else {
-                    showError(errorEl, 'Failed to save. Check your token permissions and try again.');
+                    showError(errorEl, `Failed to save: ${result.error}. Make sure your token is a Classic token with "repo" scope.`);
                 }
             } catch (err) {
                 hideLoading();
@@ -998,15 +1008,15 @@ Code block
                 await loadPosts();
                 const post = state.posts.find(p => p.id === deletePostId);
                 state.posts = state.posts.filter(p => p.id !== deletePostId);
-                const ok = await savePosts(`Delete blog post: ${post ? post.title : deletePostId}`);
+                const result = await savePosts(`Delete blog post: ${post ? post.title : deletePostId}`);
 
                 hideLoading();
 
-                if (ok) {
+                if (result.ok) {
                     showToast('Post deleted.', 'success');
                     await loadPosts();
                 } else {
-                    showToast('Failed to delete.', 'error');
+                    showToast(`Failed to delete: ${result.error}`, 'error');
                     await loadPosts();
                 }
             } catch (err) {
@@ -1085,12 +1095,23 @@ Code block
             // Check for existing session
             const savedToken = sessionStorage.getItem('gh_token');
             const savedUsername = sessionStorage.getItem('gh_username');
+            const savedBranch = sessionStorage.getItem('gh_branch');
             if (savedToken && savedUsername) {
                 state.token = savedToken;
                 state.username = savedUsername;
+                if (savedBranch) CONFIG.branch = savedBranch;
                 document.getElementById('username-display').textContent = savedUsername;
+                // Re-detect branch if not saved
+                if (!CONFIG.branch) {
+                    githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}`).then(res => res.json()).then(repo => {
+                        CONFIG.branch = repo.default_branch || 'main';
+                        sessionStorage.setItem('gh_branch', CONFIG.branch);
+                        loadPosts();
+                    });
+                } else {
+                    loadPosts();
+                }
                 showView('dashboard');
-                loadPosts();
             }
         });
 
