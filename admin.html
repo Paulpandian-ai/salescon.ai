@@ -1724,30 +1724,35 @@ Code block
             errorEl.style.display = 'none';
             successEl.style.display = 'none';
 
-            siteContent.profile.headline = document.getElementById('profile-headline').value.trim();
-            siteContent.profile.bio = document.getElementById('profile-bio').value;
+            // Capture ALL form data before any async operations
+            const headline = document.getElementById('profile-headline').value.trim();
+            const bio = document.getElementById('profile-bio').value;
+            const tags = [...(siteContent.profile.tags || [])];
+            const experience = [...(siteContent.experience || [])];
+            let photoPath = siteContent.profile.photo;
 
             showLoading('Saving profile...');
 
             try {
                 // Upload photo if pending
                 if (pendingPhoto) {
-                    const photoPath = `assets/profile-photo.${pendingPhoto.ext === 'png' ? 'png' : 'jpg'}`;
+                    photoPath = `assets/profile-photo.${pendingPhoto.ext === 'png' ? 'png' : 'jpg'}`;
                     const uploadResult = await uploadFile(pendingPhoto.base64, photoPath, 'Update profile photo');
-                    if (uploadResult.ok) {
-                        siteContent.profile.photo = photoPath;
-                        pendingPhoto = null;
-                    } else {
+                    if (!uploadResult.ok) {
                         hideLoading();
                         showError(errorEl, `Photo upload failed: ${uploadResult.error}`);
                         return;
                     }
+                    pendingPhoto = null;
                 }
 
-                // Reload to get latest SHA
+                // Reload to get the LATEST SHA, then re-apply all our changes
                 await loadSiteContent();
-                siteContent.profile.headline = document.getElementById('profile-headline').value.trim();
-                siteContent.profile.bio = document.getElementById('profile-bio').value;
+                siteContent.profile.headline = headline;
+                siteContent.profile.bio = bio;
+                siteContent.profile.tags = tags;
+                siteContent.profile.photo = photoPath;
+                siteContent.experience = experience;
 
                 const result = await saveSiteContent('Update profile');
                 hideLoading();
