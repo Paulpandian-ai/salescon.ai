@@ -98,23 +98,6 @@
         }
         .nav-links a:hover { color: var(--white); }
 
-        .nav-cta {
-            background: var(--accent) !important;
-            color: var(--black) !important;
-            padding: 0.5rem 1.25rem;
-            border-radius: 6px;
-            font-weight: 700 !important;
-            font-size: 0.8rem !important;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            transition: all 0.2s !important;
-        }
-        .nav-cta:hover {
-            background: var(--accent-dim) !important;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 20px var(--accent-glow);
-        }
-
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -705,65 +688,6 @@
             50% { box-shadow: 0 0 30px 10px rgba(79, 140, 255, 0.06); }
         }
 
-        /* ===== NEWSLETTER ===== */
-        .newsletter-section {
-            position: relative;
-        }
-
-        .newsletter-box {
-            max-width: 700px;
-            margin: 3rem auto 0;
-            text-align: center;
-        }
-
-        .newsletter-form {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 2rem;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .newsletter-form input {
-            flex: 1;
-            padding: 0.9rem 1.25rem;
-            background: var(--gray-800);
-            border: 1px solid var(--gray-700);
-            border-radius: 8px;
-            color: var(--white);
-            font-family: var(--font-body);
-            font-size: 0.95rem;
-            transition: border-color 0.2s;
-            outline: none;
-        }
-        .newsletter-form input::placeholder { color: var(--gray-500); }
-        .newsletter-form input:focus { border-color: var(--accent); }
-
-        .newsletter-form button {
-            padding: 0.9rem 1.75rem;
-            background: var(--accent);
-            color: #ffffff;
-            border: none;
-            border-radius: 8px;
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.02em;
-            cursor: pointer;
-            transition: all 0.25s;
-            white-space: nowrap;
-        }
-        .newsletter-form button:hover {
-            background: var(--accent-dim);
-            box-shadow: 0 4px 20px var(--accent-glow);
-        }
-
-        .newsletter-note {
-            margin-top: 1rem;
-            font-size: 0.8rem;
-            color: var(--gray-500);
-        }
 
         /* ===== CONTACT ===== */
         .contact {
@@ -902,7 +826,6 @@
             .hero-metric-card { padding: 1.25rem 1rem; }
             .hero-metric-number { font-size: 1.6rem; }
             section { padding: 4rem 1.5rem; }
-            .newsletter-form { flex-direction: column; }
         }
 
         /* ===== SCROLL ANIMATIONS ===== */
@@ -931,7 +854,6 @@
             <li><a href="#experience">Experience</a></li>
             <li><a href="#podcast">Podcast</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="#newsletter" class="nav-cta">Subscribe</a></li>
         </ul>
     </nav>
 
@@ -1068,29 +990,11 @@
                     <h3>The SalesCon Podcast</h3>
                     <p>Conversations with revenue leaders, AI builders, and growth executives who are redefining how companies sell, partner, and scale in the age of AI.</p>
                     <br>
-                    <a href="#newsletter" class="btn-primary">Get Notified at Launch &rarr;</a>
+                    <a href="#contact" class="btn-primary">Get Notified at Launch &rarr;</a>
                 </div>
                 <div class="podcast-visual">
                     <div class="podcast-icon-box">&#127911;</div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NEWSLETTER -->
-    <section class="newsletter-section" id="newsletter">
-        <div class="section-inner">
-            <div class="newsletter-box reveal">
-                <div class="section-label">Newsletter</div>
-                <div class="section-title">AI &times; Revenue.<br>Weekly in your inbox.</div>
-                <p class="section-desc" style="margin: 0 auto; text-align: center;">
-                    One actionable insight per week on AI-driven selling, partnership strategy, and revenue leadership. No fluff.
-                </p>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="you@company.com" aria-label="Email address">
-                    <button type="submit">Subscribe</button>
-                </div>
-                <p class="newsletter-note">Free. Weekly. Unsubscribe anytime.</p>
             </div>
         </div>
     </section>
