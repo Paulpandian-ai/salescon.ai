@@ -1207,6 +1207,9 @@
                     const section = document.getElementById('experience');
                     const timeline = document.getElementById('experience-timeline');
                     section.style.display = '';
+                    // Force timeline container visible (it has reveal class but was display:none)
+                    timeline.classList.add('visible');
+
                     timeline.innerHTML = data.experience.map(exp => {
                         const role = document.createElement('span');
                         role.textContent = exp.title || exp.role || '';
@@ -1234,7 +1237,7 @@
                             }
                         }
 
-                        return `<div class="exp-item reveal">
+                        return `<div class="exp-item">
                             <div class="exp-item-header">
                                 <span class="exp-item-role">${role.innerHTML}</span>
                                 <span class="exp-item-company">${company.innerHTML}</span>
@@ -1243,13 +1246,6 @@
                             ${descHtml ? `<div class="exp-item-desc">${descHtml}</div>` : ''}
                         </div>`;
                     }).join('');
-
-                    // Re-trigger scroll animations for new elements
-                    timeline.querySelectorAll('.reveal').forEach(el => {
-                        if (el.getBoundingClientRect().top < window.innerHeight) {
-                            el.classList.add('visible');
-                        }
-                    });
                 }
             } catch (e) {
                 // Keep hardcoded content on error
