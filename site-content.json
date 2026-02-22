@@ -13,10 +13,16 @@
   },
   "experience": [
     {
-      "title": "Global Business Development Lead, Generative AI",
+      "title": "Global Business Development Lead, Agentic AI",
       "company": "Amazon Web Services (AWS)",
       "period": "2020 - Present",
       "description": "• Defined and own AWS's global revenue and partnership strategy for Agentic AI and SAP Business Data Cloud (BDC) with SAP — building an entirely new business line at the intersection of enterprise ERP and AI.\n• Structured Partnership strategy with SAP and ISV Partners (Databricks and Snowflake) that created multi-hundred-million-dollar ARR revenue streams\n• Launched AWS SAP AI Co-innovation Program with SAP to help customers to accelerate innovation with SAP Business AI\n• Architected global co-innovation roadmaps and CxO alignment frameworks with SAP and AWS executive leadership, positioning AWS as the default enterprise cloud platform for AI-enabled digital transformation.\n• Built cross-functional GTM engine spanning sales, product, engineering, and marketing across four regions, creating a repeatable model for scaling AI partnership revenue.\n• Drove executive alignment between AWS and SAP C-suites to accelerate product roadmap integration and joint go-to-market execution across Fortune 500 accounts."
+    },
+    {
+      "title": "Global Business Development, SAP on AWS",
+      "company": "Amazon Web Services (AWS)",
+      "period": "2020-2024",
+      "description": "• Delivered 45% compound annual revenue growth in the SAP on AWS business across North and Latin America, scaling the business from early enterprise adoption to a multi-hundred-million-dollar recurring revenue platform.\n• Negotiated and closed the SAP ERP Private Cloud collaboration — AWS’s largest SAP partnership deal, securing AWS as the preferred cloud service provider for SAP’s enterprise workloads.\n• Designed and rolled out sales enablement programs for 750+ AWS account managers, embedding enterprise-selling playbooks and CxO engagement frameworks that became the standard across the Americas region.\n• Built and managed specialist sales teams (SAP, Oracle, and BD leads) across multiple geographies, establishing the cross-functional operating rhythm across sales, engineering, marketing, legal, and PR that scaled AWS’s enterprise workload business."
     }
   ],
   "resume": ""
