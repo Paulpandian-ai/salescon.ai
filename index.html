@@ -240,19 +240,25 @@
         .hero-metrics {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            animation: fadeInUp 0.6s ease 0.5s forwards;
-            opacity: 0;
+            gap: 0.85rem;
         }
 
         .hero-metric-card {
             background: rgba(15, 29, 50, 0.7);
             border: 1px solid rgba(79, 140, 255, 0.12);
             border-radius: 12px;
-            padding: 1.5rem 1.25rem;
+            padding: 1.25rem 1rem;
             text-align: center;
             transition: border-color 0.3s;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
         }
+        .hero-metric-card:nth-child(1) { animation-delay: 0.4s; }
+        .hero-metric-card:nth-child(2) { animation-delay: 0.5s; }
+        .hero-metric-card:nth-child(3) { animation-delay: 0.6s; }
+        .hero-metric-card:nth-child(4) { animation-delay: 0.7s; }
+        .hero-metric-card:nth-child(5) { animation-delay: 0.8s; }
+        .hero-metric-card:nth-child(6) { animation-delay: 0.9s; }
 
         .hero-metric-card:hover {
             border-color: rgba(79, 140, 255, 0.3);
@@ -260,7 +266,7 @@
 
         .hero-metric-number {
             font-family: var(--font-display);
-            font-size: 2rem;
+            font-size: 1.75rem;
             font-weight: 800;
             color: var(--accent);
             letter-spacing: -0.03em;
@@ -823,8 +829,8 @@
                 gap: 1rem;
             }
             .hero { padding: 6rem 1.5rem 2rem; }
-            .hero-metric-card { padding: 1.25rem 1rem; }
-            .hero-metric-number { font-size: 1.6rem; }
+            .hero-metric-card { padding: 1rem 0.75rem; }
+            .hero-metric-number { font-size: 1.4rem; }
             section { padding: 4rem 1.5rem; }
         }
 
@@ -893,6 +899,14 @@
                 <div class="hero-metric-card">
                     <div class="hero-metric-number">CBS '26</div>
                     <div class="hero-metric-label">Columbia Executive MBA</div>
+                </div>
+                <div class="hero-metric-card">
+                    <div class="hero-metric-number">8+ JVs</div>
+                    <div class="hero-metric-label">Strategic Partnerships Scaled</div>
+                </div>
+                <div class="hero-metric-card">
+                    <div class="hero-metric-number">Gen AI</div>
+                    <div class="hero-metric-label">Enterprise AI &amp; Agentic AI</div>
                 </div>
             </div>
         </div>
