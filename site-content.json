@@ -13,11 +13,10 @@
   },
   "experience": [
     {
-      "company": "Amazon Web Services (AWS)",
       "title": "Global Business Development Lead, Generative AI",
+      "company": "Amazon Web Services (AWS)",
       "period": "2020 - Present",
-      "description": "Architecting partnerships with enterprise technology leaders like SAP and Databricks, driving over $1B in ARR.",
-      "current": true
+      "description": "• Defined and own AWS's global revenue and partnership strategy for Agentic AI and SAP Business Data Cloud (BDC) with SAP — building an entirely new business line at the intersection of enterprise ERP and AI.\n• Structured Partnership strategy with SAP and ISV Partners (Databricks and Snowflake) that created multi-hundred-million-dollar ARR revenue streams\n• Launched AWS SAP AI Co-innovation Program with SAP to help customers to accelerate innovation with SAP Business AI\n• Architected global co-innovation roadmaps and CxO alignment frameworks with SAP and AWS executive leadership, positioning AWS as the default enterprise cloud platform for AI-enabled digital transformation.\n• Built cross-functional GTM engine spanning sales, product, engineering, and marketing across four regions, creating a repeatable model for scaling AI partnership revenue.\n• Drove executive alignment between AWS and SAP C-suites to accelerate product roadmap integration and joint go-to-market execution across Fortune 500 accounts."
     }
   ],
   "resume": ""
