@@ -432,6 +432,80 @@
             letter-spacing: 0.03em;
         }
 
+        /* ===== EXPERIENCE TIMELINE ===== */
+        .experience-timeline {
+            margin-top: 3rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), rgba(79, 140, 255, 0.1));
+        }
+
+        .exp-item {
+            position: relative;
+            padding: 0 0 2.5rem 2rem;
+        }
+
+        .exp-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .exp-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.6rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid var(--black);
+            box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.2);
+        }
+
+        .exp-item-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .exp-item-role {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.01em;
+        }
+
+        .exp-item-company {
+            font-size: 0.95rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .exp-item-period {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .exp-item-desc {
+            color: var(--gray-400);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-top: 0.25rem;
+        }
+
         /* ===== BLOG / FEATURED CONTENT ===== */
         .blog-grid {
             display: grid;
@@ -803,6 +877,7 @@
             .about-grid { grid-template-columns: 1fr; gap: 2rem; }
             .about-image { max-height: 350px; }
             .blog-grid { grid-template-columns: 1fr; }
+            .exp-item-header { flex-direction: column; gap: 0.25rem; }
             .podcast-banner { flex-direction: column; text-align: center; padding: 3rem 2rem; }
             .contact-grid { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
@@ -852,6 +927,7 @@
         <ul class="nav-links">
             <li><a href="/blog.html">Blog</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
             <li><a href="#podcast">Podcast</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#newsletter" class="nav-cta">Subscribe</a></li>
@@ -932,6 +1008,16 @@
                     </div>
                     <a id="resume-link" href="#" class="btn-secondary" style="display:none;margin-top:1.5rem;width:fit-content;" target="_blank">Download Resume &rarr;</a>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" style="display:none;">
+        <div class="section-inner">
+            <div class="section-label">Experience</div>
+            <div class="section-title">Career journey.</div>
+            <div class="experience-timeline reveal" id="experience-timeline">
             </div>
         </div>
     </section>
@@ -1153,6 +1239,38 @@
                     const link = document.getElementById('resume-link');
                     link.href = '/' + data.resume;
                     link.style.display = 'inline-flex';
+                }
+
+                // Experience timeline
+                if (data.experience && data.experience.length > 0) {
+                    const section = document.getElementById('experience');
+                    const timeline = document.getElementById('experience-timeline');
+                    section.style.display = '';
+                    timeline.innerHTML = data.experience.map(exp => {
+                        const role = document.createElement('span');
+                        role.textContent = exp.role || '';
+                        const company = document.createElement('span');
+                        company.textContent = exp.company || '';
+                        const period = document.createElement('span');
+                        period.textContent = exp.period || '';
+                        const desc = document.createElement('span');
+                        desc.textContent = exp.description || '';
+                        return `<div class="exp-item reveal">
+                            <div class="exp-item-header">
+                                <span class="exp-item-role">${role.innerHTML}</span>
+                                <span class="exp-item-company">${company.innerHTML}</span>
+                                <span class="exp-item-period">${period.innerHTML}</span>
+                            </div>
+                            ${desc.innerHTML ? `<div class="exp-item-desc">${desc.innerHTML}</div>` : ''}
+                        </div>`;
+                    }).join('');
+
+                    // Re-trigger scroll animations for new elements
+                    timeline.querySelectorAll('.reveal').forEach(el => {
+                        if (el.getBoundingClientRect().top < window.innerHeight) {
+                            el.classList.add('visible');
+                        }
+                    });
                 }
             } catch (e) {
                 // Keep hardcoded content on error
