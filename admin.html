@@ -1031,7 +1031,10 @@ Code block
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <textarea id="exp-description" rows="3" placeholder="Brief description of your role..."></textarea>
+                <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem;">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="insertBullet()" style="font-size:0.75rem;padding:0.25rem 0.6rem;">+ Add Bullet</button>
+                </div>
+                <textarea id="exp-description" rows="6" placeholder="Use bullets for key achievements:&#10;• Led a team of 20 engineers&#10;• Drove $100M in revenue growth&#10;• Built partnerships with Fortune 500 companies&#10;&#10;Or write plain text for a summary."></textarea>
             </div>
             <div class="modal-actions">
                 <button class="btn btn-secondary btn-sm" onclick="closeExpModal()">Cancel</button>
@@ -1677,7 +1680,20 @@ Code block
                 container.innerHTML = '<p style="color:var(--gray-500);">No experience added yet.</p>';
                 return;
             }
-            container.innerHTML = exps.map((exp, i) => `
+            container.innerHTML = exps.map((exp, i) => {
+                // Render description with bullet formatting
+                const rawDesc = (exp.description || '').trim();
+                let descHtml = '';
+                if (rawDesc) {
+                    const bullets = rawDesc.split(/(?:^|\n)\s*[•\-]\s*|(?:\s+[•]\s+)/).filter(s => s.trim());
+                    if (bullets.length > 1 || rawDesc.startsWith('•') || rawDesc.startsWith('-')) {
+                        descHtml = '<ul style="margin:0.5rem 0 0 1rem;padding:0;list-style:disc;color:var(--gray-400);font-size:0.88rem;line-height:1.7;">' +
+                            bullets.map(b => `<li style="margin-bottom:0.3rem;">${escapeHtml(b.trim())}</li>`).join('') + '</ul>';
+                    } else {
+                        descHtml = `<p style="font-size:0.88rem;color:var(--gray-400);margin-top:0.5rem;">${escapeHtml(rawDesc)}</p>`;
+                    }
+                }
+                return `
                 <div class="exp-admin-card">
                     <div class="exp-admin-header">
                         <div>
@@ -1690,9 +1706,9 @@ Code block
                         </div>
                     </div>
                     <div style="font-size:0.82rem;color:var(--accent);margin-top:0.25rem;">${escapeHtml(exp.period)}</div>
-                    <p style="font-size:0.88rem;color:var(--gray-400);margin-top:0.5rem;">${escapeHtml(exp.description)}</p>
-                </div>
-            `).join('');
+                    ${descHtml}
+                </div>`;
+            }).join('');
         }
 
         function openExpModal(index) {
@@ -1717,6 +1733,18 @@ Code block
         function closeExpModal() {
             editingExpIndex = null;
             document.getElementById('exp-modal').classList.remove('active');
+        }
+
+        function insertBullet() {
+            const textarea = document.getElementById('exp-description');
+            const start = textarea.selectionStart;
+            const val = textarea.value;
+            // Add bullet on new line (or at start if empty)
+            const prefix = (start > 0 && val[start - 1] !== '\n') ? '\n' : '';
+            const bullet = prefix + '• ';
+            textarea.value = val.substring(0, start) + bullet + val.substring(start);
+            textarea.selectionStart = textarea.selectionEnd = start + bullet.length;
+            textarea.focus();
         }
 
         function saveExperience() {
