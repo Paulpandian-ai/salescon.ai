@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SalesCon.ai — Where AI Meets Revenue</title>
-    <meta name="description" content="Paul Balasubramanian writes about AI-driven revenue strategy, ecosystem growth, and the future of sales leadership. $1B+ ARR track record. Columbia EMBA.">
+    <meta name="description" content="Paul Balasubramanian — $1B+ ARR impact across global enterprise partnerships in SaaS, Cloud, and AI. Insights on AI-native selling, ecosystem growth, and revenue leadership. Columbia EMBA '26.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:title" content="SalesCon.ai — Where AI Meets Revenue">
     <meta property="og:description" content="Paul Balasubramanian on AI-driven revenue strategy, ecosystem growth, and the future of sales leadership.">
@@ -130,7 +130,7 @@
             display: flex;
             align-items: center;
             position: relative;
-            padding: 8rem 2rem 4rem;
+            padding: 6rem 2rem 3rem;
             overflow: hidden;
         }
 
@@ -163,11 +163,19 @@
             50% { transform: translate(30px, -40px) scale(1.05); }
         }
 
-        .hero-content {
-            max-width: 900px;
+        .hero-grid {
+            max-width: 1100px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
         }
 
         .hero-badge {
@@ -176,14 +184,14 @@
             gap: 0.5rem;
             background: rgba(79, 140, 255, 0.1);
             border: 1px solid rgba(79, 140, 255, 0.25);
-            padding: 0.4rem 1rem;
+            padding: 0.35rem 0.9rem;
             border-radius: 100px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             color: var(--accent);
             letter-spacing: 0.06em;
             text-transform: uppercase;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             animation: fadeInUp 0.6s ease forwards;
             opacity: 0;
         }
@@ -201,11 +209,11 @@
 
         .hero h1 {
             font-family: var(--font-display);
-            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-size: clamp(2.5rem, 5.5vw, 4.5rem);
             font-weight: 800;
             line-height: 1.05;
             letter-spacing: -0.04em;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             animation: fadeInUp 0.6s ease 0.1s forwards;
             opacity: 0;
         }
@@ -216,11 +224,11 @@
         }
 
         .hero-sub {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             color: var(--gray-400);
-            max-width: 620px;
+            max-width: 540px;
             line-height: 1.75;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.75rem;
             animation: fadeInUp 0.6s ease 0.2s forwards;
             opacity: 0;
             font-weight: 400;
@@ -233,6 +241,57 @@
             flex-wrap: wrap;
             animation: fadeInUp 0.6s ease 0.3s forwards;
             opacity: 0;
+        }
+
+        .hero-credibility {
+            font-size: 0.88rem;
+            color: var(--gray-500);
+            line-height: 1.7;
+            margin-top: 1.5rem;
+            max-width: 500px;
+            animation: fadeInUp 0.6s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        /* Hero metrics panel */
+        .hero-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            animation: fadeInUp 0.6s ease 0.5s forwards;
+            opacity: 0;
+        }
+
+        .hero-metric-card {
+            background: rgba(15, 29, 50, 0.7);
+            border: 1px solid rgba(79, 140, 255, 0.12);
+            border-radius: 12px;
+            padding: 1.5rem 1.25rem;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+
+        .hero-metric-card:hover {
+            border-color: rgba(79, 140, 255, 0.3);
+        }
+
+        .hero-metric-number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+        .hero-metric-label {
+            font-size: 0.72rem;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+            line-height: 1.4;
         }
 
         .btn-primary {
@@ -285,45 +344,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== STATS BAR ===== */
-        .stats-bar {
-            border-top: 1px solid rgba(79, 140, 255, 0.1);
-            border-bottom: 1px solid rgba(79, 140, 255, 0.1);
-            background: rgba(15, 29, 50, 0.6);
-        }
-
-        .stats-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            padding: 0;
-        }
-
-        .stat-item {
-            padding: 2.5rem 2rem;
-            text-align: center;
-            border-right: 1px solid rgba(79, 140, 255, 0.08);
-        }
-        .stat-item:last-child { border-right: none; }
-
-        .stat-number {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--accent);
-            letter-spacing: -0.03em;
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--gray-500);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            font-weight: 500;
-        }
 
         /* ===== SECTION STYLES ===== */
         section {
@@ -853,8 +873,9 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 900px) {
-            .stats-inner { grid-template-columns: repeat(2, 1fr); }
-            .stat-item:nth-child(2) { border-right: none; }
+            .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .hero-metrics { grid-template-columns: 1fr 1fr; }
+            .hero h1 { font-size: clamp(2.2rem, 6vw, 3.5rem); }
             .about-grid { grid-template-columns: 1fr; gap: 2rem; }
             .about-image { max-height: 350px; }
             .blog-grid { grid-template-columns: 1fr; }
@@ -877,8 +898,9 @@
                 border-bottom: 1px solid rgba(79, 140, 255, 0.08);
                 gap: 1rem;
             }
-            .hero { padding: 7rem 1.5rem 3rem; }
-            .stats-inner { grid-template-columns: repeat(2, 1fr); }
+            .hero { padding: 6rem 1.5rem 2rem; }
+            .hero-metric-card { padding: 1.25rem 1rem; }
+            .hero-metric-number { font-size: 1.6rem; }
             section { padding: 4rem 1.5rem; }
             .newsletter-form { flex-direction: column; }
         }
@@ -915,43 +937,44 @@
 
     <!-- HERO -->
     <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">Now writing — new posts weekly</div>
-            <h1>
-                Where <span class="accent">AI</span><br>
-                Meets <span class="accent">Revenue</span><span class="thin">.</span>
-            </h1>
-            <p class="hero-sub">
-                I'm Paul Balasubramanian. I've driven $1B+ in ARR through global enterprise partnerships at AWS. I write about AI-native selling, ecosystem growth, and the future of revenue leadership.
-            </p>
-            <div class="hero-actions">
-                <a href="#blog" class="btn-primary">Read the Blog &rarr;</a>
-                <a href="#newsletter" class="btn-secondary">Subscribe to the Newsletter</a>
+        <div class="hero-grid">
+            <div class="hero-content">
+                <div class="hero-badge">Now writing — new posts weekly</div>
+                <h1>
+                    Where <span class="accent">AI</span><br>
+                    Meets <span class="accent">Revenue</span><span class="thin">.</span>
+                </h1>
+                <p class="hero-sub">
+                    I'm Paul Balasubramanian. I've driven $1B+ in ARR across global enterprise partnerships in SaaS, Cloud, and AI. I write about AI-native selling, ecosystem growth, and the future of revenue leadership.
+                </p>
+                <div class="hero-actions">
+                    <a href="/blog.html" class="btn-primary">Read My Insights &rarr;</a>
+                    <a href="https://www.linkedin.com/in/paulpandianb/" target="_blank" class="btn-secondary">Let's Connect &rarr;</a>
+                </div>
+                <p class="hero-credibility">
+                    Two decades of scaling revenue through enterprise ecosystems — from building consulting practices to leading global AI partnerships.
+                </p>
+            </div>
+            <div class="hero-metrics">
+                <div class="hero-metric-card">
+                    <div class="hero-metric-number">$1B+</div>
+                    <div class="hero-metric-label">Cumulative ARR Impact</div>
+                </div>
+                <div class="hero-metric-card">
+                    <div class="hero-metric-number">20+</div>
+                    <div class="hero-metric-label">Years Enterprise Experience</div>
+                </div>
+                <div class="hero-metric-card">
+                    <div class="hero-metric-number">4 Regions</div>
+                    <div class="hero-metric-label">NA &middot; EMEA &middot; LATAM &middot; APAC</div>
+                </div>
+                <div class="hero-metric-card">
+                    <div class="hero-metric-number">CBS '26</div>
+                    <div class="hero-metric-label">Columbia Executive MBA</div>
+                </div>
             </div>
         </div>
     </section>
-
-    <!-- STATS BAR -->
-    <div class="stats-bar">
-        <div class="stats-inner">
-            <div class="stat-item">
-                <div class="stat-number">$1B+</div>
-                <div class="stat-label">ARR Impact</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">20+</div>
-                <div class="stat-label">Years Experience</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">AWS</div>
-                <div class="stat-label">Gen AI Lead</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">CBS</div>
-                <div class="stat-label">Columbia EMBA</div>
-            </div>
-        </div>
-    </div>
 
     <!-- ABOUT -->
     <section class="about" id="about">
@@ -969,10 +992,10 @@
                     <h3 id="about-headline">Building at the intersection of AI and growth.</h3>
                     <div id="about-bio">
                         <p>
-                            With 20 years spanning business development, strategic partnerships, and go-to-market leadership, I've had the privilege of driving transformative revenue growth at the world's largest cloud company.
+                            With 20+ years spanning business development, strategic partnerships, and go-to-market leadership, I've had the privilege of driving transformative revenue growth across enterprise SaaS, Cloud, and AI.
                         </p>
                         <p>
-                            As Global Business Development Lead for Generative AI at Amazon Web Services, I architect partnerships with enterprise technology leaders like SAP and Databricks — deals that have collectively driven over $1 billion in annual recurring revenue.
+                            I architect global partnerships with enterprise technology leaders — deals that have collectively driven over $1 billion in annual recurring revenue across NA, EMEA, LATAM, and APAC.
                         </p>
                         <p>
                             Currently completing my Executive MBA at Columbia Business School, I write about what the AI revolution means for revenue leaders, sales organizations, and the future of B2B growth.
@@ -985,7 +1008,6 @@
                         <span class="about-tag">Go-to-Market</span>
                         <span class="about-tag">Columbia EMBA</span>
                     </div>
-                    <a id="resume-link" href="#" class="btn-secondary" style="display:none;margin-top:1.5rem;width:fit-content;" target="_blank">Download Resume &rarr;</a>
                 </div>
             </div>
         </div>
@@ -1193,13 +1215,6 @@
                         div.textContent = tag;
                         return `<span class="about-tag">${div.innerHTML}</span>`;
                     }).join('');
-                }
-
-                // Resume link
-                if (data.resume) {
-                    const link = document.getElementById('resume-link');
-                    link.href = '/' + data.resume;
-                    link.style.display = 'inline-flex';
                 }
 
                 // Experience timeline
