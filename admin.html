@@ -777,6 +777,193 @@
             font-size: 0.82rem;
             color: var(--gray-500);
         }
+
+        /* ===== ANALYTICS ===== */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--gray-800);
+            border: 1px solid var(--gray-700);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .stat-card-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .stat-card-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 0.35rem;
+        }
+
+        .stat-card-sub {
+            font-size: 0.72rem;
+            color: var(--gray-500);
+            margin-top: 0.25rem;
+        }
+
+        .analytics-chart {
+            background: var(--gray-800);
+            border: 1px solid var(--gray-700);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .analytics-chart h4 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 120px;
+        }
+
+        .chart-bar-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+        }
+
+        .chart-bar {
+            width: 100%;
+            min-height: 2px;
+            background: var(--accent);
+            border-radius: 3px 3px 0 0;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .chart-bar:hover { opacity: 1; }
+
+        .chart-bar-label {
+            font-size: 0.6rem;
+            color: var(--gray-500);
+            margin-top: 0.4rem;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .chart-bar-value {
+            font-size: 0.65rem;
+            color: var(--gray-400);
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .analytics-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .analytics-table th {
+            text-align: left;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.6rem 0.75rem;
+            border-bottom: 1px solid var(--gray-700);
+        }
+
+        .analytics-table td {
+            padding: 0.6rem 0.75rem;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(79, 140, 255, 0.06);
+        }
+
+        .analytics-table tr:hover td {
+            background: rgba(79, 140, 255, 0.03);
+        }
+
+        .analytics-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .analytics-note {
+            font-size: 0.78rem;
+            color: var(--gray-500);
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background: rgba(79, 140, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(79, 140, 255, 0.1);
+        }
+
+        .engagement-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(79, 140, 255, 0.06);
+        }
+
+        .engagement-row:last-child { border-bottom: none; }
+
+        .engagement-post-title {
+            font-weight: 600;
+            font-size: 0.88rem;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .engagement-stats {
+            display: flex;
+            gap: 1rem;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+
+        .engagement-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.82rem;
+            color: var(--gray-400);
+        }
+
+        .engagement-stat .like-icon { color: var(--green); }
+        .engagement-stat .dislike-icon { color: var(--red); }
+        .engagement-stat .comment-icon { color: var(--accent); }
+
+        @media (max-width: 900px) {
+            .analytics-grid { grid-template-columns: repeat(2, 1fr); }
+            .analytics-two-col { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .analytics-grid { grid-template-columns: 1fr 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -836,6 +1023,7 @@
             <!-- TABS -->
             <div class="admin-tabs">
                 <button class="admin-tab active" onclick="switchTab('posts')">Posts</button>
+                <button class="admin-tab" onclick="switchTab('analytics')">Analytics</button>
                 <button class="admin-tab" onclick="switchTab('profile')">Profile</button>
                 <button class="admin-tab" onclick="switchTab('resume')">Resume</button>
             </div>
@@ -847,6 +1035,84 @@
                     <button class="btn btn-primary" onclick="openEditor()">+ New Post</button>
                 </div>
                 <div id="posts-list"></div>
+            </div>
+
+            <!-- ANALYTICS TAB -->
+            <div class="tab-content" id="tab-analytics">
+                <div class="dashboard-header">
+                    <h2>Site Analytics</h2>
+                    <button class="btn btn-secondary btn-sm" onclick="loadAnalytics()">Refresh</button>
+                </div>
+
+                <!-- Traffic Stats -->
+                <div class="analytics-grid" id="analytics-stats">
+                    <div class="stat-card">
+                        <div class="stat-card-value" id="stat-views">—</div>
+                        <div class="stat-card-label">Page Views</div>
+                        <div class="stat-card-sub">Last 14 days</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-value" id="stat-uniques">—</div>
+                        <div class="stat-card-label">Unique Visitors</div>
+                        <div class="stat-card-sub">Last 14 days</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-value" id="stat-clones">—</div>
+                        <div class="stat-card-label">Repo Clones</div>
+                        <div class="stat-card-sub">Last 14 days</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-value" id="stat-stars">—</div>
+                        <div class="stat-card-label">GitHub Stars</div>
+                        <div class="stat-card-sub">All time</div>
+                    </div>
+                </div>
+
+                <!-- Traffic Chart -->
+                <div class="admin-section">
+                    <h3>Daily Traffic (Last 14 Days)</h3>
+                    <div class="analytics-chart">
+                        <h4>Page Views</h4>
+                        <div class="chart-bars" id="views-chart">
+                            <div style="color:var(--gray-500);font-size:0.85rem;width:100%;text-align:center;padding:2rem 0;">Loading traffic data...</div>
+                        </div>
+                    </div>
+                    <div class="analytics-chart">
+                        <h4>Unique Visitors</h4>
+                        <div class="chart-bars" id="uniques-chart">
+                            <div style="color:var(--gray-500);font-size:0.85rem;width:100%;text-align:center;padding:2rem 0;">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Popular Pages & Referrers -->
+                <div class="analytics-two-col">
+                    <div class="admin-section">
+                        <h3>Popular Pages</h3>
+                        <div id="popular-pages">
+                            <p style="color:var(--gray-500);font-size:0.85rem;">Loading...</p>
+                        </div>
+                    </div>
+                    <div class="admin-section">
+                        <h3>Top Referrers</h3>
+                        <div id="top-referrers">
+                            <p style="color:var(--gray-500);font-size:0.85rem;">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Engagement Section -->
+                <div class="admin-section">
+                    <h3>Post Engagement</h3>
+                    <p style="color:var(--gray-500);font-size:0.85rem;margin-bottom:1rem;">Likes, dislikes, and comments from blog readers. Engagement data is stored per-visitor in their browser.</p>
+                    <div id="engagement-list">
+                        <p style="color:var(--gray-500);font-size:0.85rem;">No posts to show engagement for.</p>
+                    </div>
+                </div>
+
+                <div class="analytics-note">
+                    Traffic data is sourced from the GitHub Traffic API and covers the last 14 days. For long-term analytics, consider integrating Google Analytics or Plausible.
+                </div>
             </div>
 
             <!-- PROFILE TAB -->
@@ -1522,6 +1788,7 @@ Code block
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelector(`.admin-tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
             document.getElementById(`tab-${tabName}`).classList.add('active');
+            if (tabName === 'analytics') loadAnalytics();
             if (tabName === 'profile') loadSiteContentUI();
             if (tabName === 'resume') loadResumeUI();
         }
@@ -1954,6 +2221,134 @@ Code block
                 hideLoading();
                 showToast(`Error: ${err.message}`, 'error');
             }
+        }
+
+        // ===== ANALYTICS =====
+        async function loadAnalytics() {
+            try {
+                // Fetch all traffic data in parallel
+                const [viewsRes, clonesRes, pathsRes, referrersRes, repoRes] = await Promise.all([
+                    githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/traffic/views`),
+                    githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/traffic/clones`),
+                    githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/traffic/popular/paths`),
+                    githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}/traffic/popular/referrers`),
+                    githubAPI(`/repos/${CONFIG.owner}/${CONFIG.repo}`)
+                ]);
+
+                // Parse responses
+                const views = viewsRes.ok ? await viewsRes.json() : { count: 0, uniques: 0, views: [] };
+                const clones = clonesRes.ok ? await clonesRes.json() : { count: 0, uniques: 0, clones: [] };
+                const paths = pathsRes.ok ? await pathsRes.json() : [];
+                const referrers = referrersRes.ok ? await referrersRes.json() : [];
+                const repo = repoRes.ok ? await repoRes.json() : { stargazers_count: 0 };
+
+                // Update stat cards
+                document.getElementById('stat-views').textContent = views.count.toLocaleString();
+                document.getElementById('stat-uniques').textContent = views.uniques.toLocaleString();
+                document.getElementById('stat-clones').textContent = clones.count.toLocaleString();
+                document.getElementById('stat-stars').textContent = repo.stargazers_count.toLocaleString();
+
+                // Render views chart
+                renderTrafficChart('views-chart', views.views || [], 'count');
+
+                // Render uniques chart
+                renderTrafficChart('uniques-chart', views.views || [], 'uniques');
+
+                // Render popular pages
+                renderPopularPages(paths);
+
+                // Render referrers
+                renderReferrers(referrers);
+
+                // Render engagement
+                renderEngagement();
+
+            } catch (err) {
+                console.error('Analytics error:', err);
+                document.getElementById('stat-views').textContent = '—';
+                document.getElementById('stat-uniques').textContent = '—';
+                document.getElementById('views-chart').innerHTML = '<div style="color:var(--red);font-size:0.85rem;width:100%;text-align:center;padding:2rem 0;">Failed to load traffic data. Ensure your token has repo scope.</div>';
+            }
+        }
+
+        function renderTrafficChart(containerId, data, field) {
+            const container = document.getElementById(containerId);
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div style="color:var(--gray-500);font-size:0.85rem;width:100%;text-align:center;padding:2rem 0;">No traffic data available yet.</div>';
+                return;
+            }
+
+            const maxVal = Math.max(...data.map(d => d[field]), 1);
+
+            container.innerHTML = data.map(d => {
+                const date = new Date(d.timestamp);
+                const label = `${date.getMonth() + 1}/${date.getDate()}`;
+                const val = d[field];
+                const height = Math.max(2, (val / maxVal) * 100);
+                return `
+                    <div class="chart-bar-col" title="${label}: ${val}">
+                        <div class="chart-bar-value">${val}</div>
+                        <div class="chart-bar" style="height:${height}px;"></div>
+                        <div class="chart-bar-label">${label}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderPopularPages(paths) {
+            const container = document.getElementById('popular-pages');
+            if (!paths || paths.length === 0) {
+                container.innerHTML = '<p style="color:var(--gray-500);font-size:0.85rem;">No data available yet.</p>';
+                return;
+            }
+            let html = '<table class="analytics-table"><thead><tr><th>Path</th><th>Views</th><th>Uniques</th></tr></thead><tbody>';
+            for (const p of paths.slice(0, 10)) {
+                html += `<tr><td style="color:var(--accent);font-size:0.82rem;word-break:break-all;">${escapeHtml(p.path)}</td><td style="font-weight:600;">${p.count}</td><td>${p.uniques}</td></tr>`;
+            }
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function renderReferrers(referrers) {
+            const container = document.getElementById('top-referrers');
+            if (!referrers || referrers.length === 0) {
+                container.innerHTML = '<p style="color:var(--gray-500);font-size:0.85rem;">No referrer data available yet.</p>';
+                return;
+            }
+            let html = '<table class="analytics-table"><thead><tr><th>Referrer</th><th>Views</th><th>Uniques</th></tr></thead><tbody>';
+            for (const r of referrers.slice(0, 10)) {
+                html += `<tr><td style="font-weight:600;">${escapeHtml(r.referrer)}</td><td>${r.count}</td><td>${r.uniques}</td></tr>`;
+            }
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function renderEngagement() {
+            const container = document.getElementById('engagement-list');
+            if (state.posts.length === 0) {
+                container.innerHTML = '<p style="color:var(--gray-500);font-size:0.85rem;">No posts to show engagement for.</p>';
+                return;
+            }
+            const published = state.posts.filter(p => p.published);
+            if (published.length === 0) {
+                container.innerHTML = '<p style="color:var(--gray-500);font-size:0.85rem;">No published posts yet.</p>';
+                return;
+            }
+            container.innerHTML = published.map(post => {
+                const likes = post.likes || 0;
+                const dislikes = post.dislikes || 0;
+                const comments = (post.comments || []).length;
+                return `
+                    <div class="engagement-row">
+                        <span class="engagement-post-title">${escapeHtml(post.title)}</span>
+                        <div class="engagement-stats">
+                            <span class="engagement-stat"><span class="like-icon">&#9650;</span> ${likes}</span>
+                            <span class="engagement-stat"><span class="dislike-icon">&#9660;</span> ${dislikes}</span>
+                            <span class="engagement-stat"><span class="comment-icon">&#9671;</span> ${comments}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
         // ===== MARKDOWN RENDERER =====

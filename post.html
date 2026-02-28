@@ -294,6 +294,210 @@
             margin: 2.5rem 0;
         }
 
+        /* ===== REACTIONS ===== */
+        .reactions-section {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 2rem 2rem;
+        }
+
+        .reactions-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--gray-900);
+            border: 1px solid rgba(79, 140, 255, 0.08);
+            border-radius: 12px;
+        }
+
+        .reactions-label {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .reaction-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            border: 1px solid var(--gray-700);
+            background: transparent;
+            color: var(--gray-400);
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .reaction-btn:hover {
+            border-color: var(--gray-500);
+            color: var(--white);
+        }
+
+        .reaction-btn.active-like {
+            border-color: #34d399;
+            background: rgba(52, 211, 153, 0.1);
+            color: #34d399;
+        }
+
+        .reaction-btn.active-dislike {
+            border-color: #ff4f4f;
+            background: rgba(255, 79, 79, 0.1);
+            color: #ff4f4f;
+        }
+
+        .reaction-btn .reaction-icon {
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+
+        .reaction-btn .reaction-count {
+            font-size: 0.82rem;
+        }
+
+        /* ===== COMMENTS ===== */
+        .comments-section {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 2rem 2rem;
+        }
+
+        .comments-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(79, 140, 255, 0.08);
+        }
+
+        .comment-form {
+            background: var(--gray-900);
+            border: 1px solid rgba(79, 140, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .comment-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            background: var(--gray-800);
+            border: 1px solid var(--gray-700);
+            border-radius: 8px;
+            color: var(--white);
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .comment-form input::placeholder,
+        .comment-form textarea::placeholder { color: var(--gray-500); }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus { border-color: var(--accent); }
+
+        .comment-form textarea {
+            resize: vertical;
+            min-height: 80px;
+            margin-bottom: 0.75rem;
+        }
+
+        .comment-form-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .comment-submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .comment-submit-btn:hover {
+            background: var(--accent-dim);
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .comment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .comment-card {
+            background: var(--gray-900);
+            border: 1px solid rgba(79, 140, 255, 0.08);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+        }
+
+        .comment-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--white);
+        }
+
+        .comment-date {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .comment-body {
+            font-size: 0.9rem;
+            color: var(--gray-300);
+            line-height: 1.65;
+        }
+
+        .comment-empty {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--gray-500);
+            font-size: 0.9rem;
+        }
+
+        .comment-success {
+            background: rgba(52, 211, 153, 0.1);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: #34d399;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: none;
+        }
+
         /* ===== POST FOOTER ===== */
         .post-footer {
             max-width: 760px;
@@ -427,6 +631,10 @@
             }
             .article-header { padding: 7rem 1.5rem 1.5rem; }
             .article-content { padding: 2rem 1.5rem 3rem; }
+            .reactions-section { padding: 0 1.5rem 1.5rem; }
+            .reactions-bar { flex-wrap: wrap; padding: 1rem; }
+            .comments-section { padding: 0 1.5rem 1.5rem; }
+            .comment-form-row { grid-template-columns: 1fr; }
             .post-footer { padding: 0 1.5rem 3rem; }
         }
 
@@ -505,6 +713,11 @@
                 const metaDesc = document.querySelector('meta[name="description"]');
                 if (metaDesc) metaDesc.setAttribute('content', post.excerpt);
 
+                // Load reactions from localStorage
+                const reactions = getReactions(postId);
+                const comments = getComments(postId);
+                const userReaction = getUserReaction(postId);
+
                 // Render article
                 container.innerHTML = `
                     <div class="article-header">
@@ -520,9 +733,44 @@
                     <div class="article-content">
                         ${renderMarkdown(post.content)}
                     </div>
+
+                    <!-- REACTIONS -->
+                    <div class="reactions-section">
+                        <div class="reactions-bar">
+                            <span class="reactions-label">Was this helpful?</span>
+                            <button class="reaction-btn ${userReaction === 'like' ? 'active-like' : ''}" id="like-btn" onclick="handleReaction('${postId}', 'like')">
+                                <span class="reaction-icon">&#9650;</span>
+                                <span class="reaction-count" id="like-count">${reactions.likes}</span>
+                            </button>
+                            <button class="reaction-btn ${userReaction === 'dislike' ? 'active-dislike' : ''}" id="dislike-btn" onclick="handleReaction('${postId}', 'dislike')">
+                                <span class="reaction-icon">&#9660;</span>
+                                <span class="reaction-count" id="dislike-count">${reactions.dislikes}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- COMMENTS -->
+                    <div class="comments-section">
+                        <div class="comments-header">Comments (${comments.length})</div>
+                        <div class="comment-form">
+                            <div class="comment-success" id="comment-success">Comment posted!</div>
+                            <div class="comment-form-row">
+                                <input type="text" id="comment-name" placeholder="Your name" maxlength="80">
+                                <input type="email" id="comment-email" placeholder="Email (optional, not displayed)" maxlength="120">
+                            </div>
+                            <textarea id="comment-text" placeholder="Share your thoughts..." maxlength="2000"></textarea>
+                            <div class="comment-form-actions">
+                                <button class="comment-submit-btn" onclick="submitComment('${postId}')">Post Comment</button>
+                            </div>
+                        </div>
+                        <div class="comment-list" id="comment-list">
+                            ${renderComments(comments)}
+                        </div>
+                    </div>
+
                     <div class="post-footer">
                         <a href="/blog.html">&larr; All Posts</a>
-                        <a href="/#newsletter">Subscribe for more &rarr;</a>
+                        <a href="/#contact">Get in touch &rarr;</a>
                     </div>
                 `;
             } catch (err) {
@@ -605,6 +853,119 @@
             }).join('\n');
 
             return text;
+        }
+
+        // ===== REACTIONS =====
+        function getReactions(postId) {
+            try {
+                const data = JSON.parse(localStorage.getItem(`sc_reactions_${postId}`) || '{}');
+                return { likes: data.likes || 0, dislikes: data.dislikes || 0 };
+            } catch { return { likes: 0, dislikes: 0 }; }
+        }
+
+        function getUserReaction(postId) {
+            return localStorage.getItem(`sc_user_reaction_${postId}`) || null;
+        }
+
+        function handleReaction(postId, type) {
+            const currentReaction = getUserReaction(postId);
+            const reactions = getReactions(postId);
+
+            if (currentReaction === type) {
+                // Undo reaction
+                reactions[type === 'like' ? 'likes' : 'dislikes']--;
+                localStorage.removeItem(`sc_user_reaction_${postId}`);
+            } else {
+                // Remove previous reaction if any
+                if (currentReaction === 'like') reactions.likes--;
+                if (currentReaction === 'dislike') reactions.dislikes--;
+                // Add new reaction
+                reactions[type === 'like' ? 'likes' : 'dislikes']++;
+                localStorage.setItem(`sc_user_reaction_${postId}`, type);
+            }
+
+            // Ensure non-negative
+            reactions.likes = Math.max(0, reactions.likes);
+            reactions.dislikes = Math.max(0, reactions.dislikes);
+
+            localStorage.setItem(`sc_reactions_${postId}`, JSON.stringify(reactions));
+
+            // Update UI
+            const newReaction = getUserReaction(postId);
+            document.getElementById('like-count').textContent = reactions.likes;
+            document.getElementById('dislike-count').textContent = reactions.dislikes;
+
+            const likeBtn = document.getElementById('like-btn');
+            const dislikeBtn = document.getElementById('dislike-btn');
+            likeBtn.className = 'reaction-btn' + (newReaction === 'like' ? ' active-like' : '');
+            dislikeBtn.className = 'reaction-btn' + (newReaction === 'dislike' ? ' active-dislike' : '');
+        }
+
+        // ===== COMMENTS =====
+        function getComments(postId) {
+            try {
+                return JSON.parse(localStorage.getItem(`sc_comments_${postId}`) || '[]');
+            } catch { return []; }
+        }
+
+        function saveComments(postId, comments) {
+            localStorage.setItem(`sc_comments_${postId}`, JSON.stringify(comments));
+        }
+
+        function renderComments(comments) {
+            if (comments.length === 0) {
+                return '<div class="comment-empty">No comments yet. Be the first to share your thoughts!</div>';
+            }
+            return comments.map(c => `
+                <div class="comment-card">
+                    <div class="comment-card-header">
+                        <span class="comment-author">${escapeHtml(c.name)}</span>
+                        <span class="comment-date">${c.date}</span>
+                    </div>
+                    <div class="comment-body">${escapeHtml(c.text).replace(/\n/g, '<br>')}</div>
+                </div>
+            `).join('');
+        }
+
+        function submitComment(postId) {
+            const nameInput = document.getElementById('comment-name');
+            const emailInput = document.getElementById('comment-email');
+            const textInput = document.getElementById('comment-text');
+            const successEl = document.getElementById('comment-success');
+
+            const name = nameInput.value.trim();
+            const text = textInput.value.trim();
+
+            if (!name) { nameInput.focus(); return; }
+            if (!text) { textInput.focus(); return; }
+
+            const comments = getComments(postId);
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+            comments.unshift({
+                name: name,
+                email: emailInput.value.trim(),
+                text: text,
+                date: dateStr,
+                timestamp: now.toISOString()
+            });
+
+            saveComments(postId, comments);
+
+            // Update UI
+            document.getElementById('comment-list').innerHTML = renderComments(comments);
+            nameInput.value = '';
+            emailInput.value = '';
+            textInput.value = '';
+
+            // Update header count
+            const header = document.querySelector('.comments-header');
+            if (header) header.textContent = `Comments (${comments.length})`;
+
+            // Show success
+            successEl.style.display = 'block';
+            setTimeout(() => { successEl.style.display = 'none'; }, 3000);
         }
 
         loadPost();
