@@ -1,12 +1,12 @@
 #!/bin/bash
 # ============================================
-# SalesCon.ai Deploy Script
+# PaulPandian.com Deploy Script
 # Usage: ./deploy.sh
 # ============================================
 
 set -e
 
-BUCKET="salescon.ai"
+BUCKET="paulpandian.com"
 DISTRIBUTION_ID="${CLOUDFRONT_DIST_ID:-}"
 SITE_DIR="./public"
 
@@ -16,7 +16,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 echo ""
-echo -e "${GREEN}🚀 Deploying SalesCon.ai${NC}"
+echo -e "${GREEN}🚀 Deploying PaulPandian.com${NC}"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━"
 
 # Check AWS CLI
@@ -75,5 +75,5 @@ else
 fi
 
 echo -e "\n${GREEN}✅ Deploy complete!${NC}"
-echo -e "   Site: https://salescon.ai"
+echo -e "   Site: https://paulpandian.com"
 echo ""
