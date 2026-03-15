@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://salescon.ai/sitemap.xml
+Sitemap: https://paulpandian.com/sitemap.xml
